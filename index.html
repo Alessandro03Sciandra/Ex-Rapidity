@@ -1,0 +1,1368 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Esercizi di Rapidità — Simone Galiotti</title>
+  <style>
+    :root {
+      --orange: #ff6d00;
+      --orange-dark: #e65100;
+      --orange-light: #ff9e40;
+      --bg: #151210;
+      --surface: #1e1a16;
+      --surface2: #272119;
+      --border: #3a3028;
+      --text: #f5ede0;
+      --text-muted: #9a8a78;
+      --low:    #4ade80;
+      --med:    #facc15;
+      --high:   #f87171;
+      --low-bg:  rgba(74,222,128,0.08);
+      --med-bg:  rgba(250,204,21,0.08);
+      --high-bg: rgba(248,113,113,0.08);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #1a1410 0%, #1e1810 60%, #241c10 100%);
+      border-bottom: 2px solid var(--orange);
+      padding: 2rem 1.5rem 1.75rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 50% -20%, rgba(255,109,0,0.2) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .header-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      position: relative;
+    }
+    header h1 {
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      position: relative;
+    }
+    header h1 em { color: var(--orange); font-style: normal; }
+    header p {
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+      position: relative;
+    }
+    .header-tip {
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255,109,0,0.1);
+      border: 1px solid rgba(255,109,0,0.25);
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem;
+      color: var(--orange-light);
+      position: relative;
+    }
+
+    /* ── INTENSITY LEGEND ── */
+    .legend {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      padding: 0.85rem 1rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-low  { background: var(--low);  }
+    .dot-med  { background: var(--med);  }
+    .dot-high { background: var(--high); }
+
+    /* ── MAIN ── */
+    main { max-width: 980px; margin: 0 auto; padding: 2rem 1.25rem 3rem; }
+
+    /* ── LOGO & ATHLETE ── */
+    .header-brand {
+      position: absolute;
+      top: 0.6rem; left: 0.9rem;
+      z-index: 1;
+      width: 82px; height: 82px;
+    }
+    .brand-logo-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      opacity: 0.18;
+    }
+    .brand-name {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1;
+      text-align: center;
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      color: white;
+      line-height: 1.5;
+    }
+    .athlete-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: rgba(255,109,0,0.08);
+      border: 1px solid rgba(255,109,0,0.2);
+      border-radius: 8px;
+      padding: 0.3rem 0.75rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+    .athlete-tag strong { color: var(--text); font-weight: 700; }
+
+    /* ── INTENSITY SECTION ACCORDION ── */
+    .intensity-block { margin-bottom: 1rem; }
+
+    .intensity-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 0;
+      cursor: pointer;
+      user-select: none;
+      padding: 0.75rem 1rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      transition: border-color 0.25s ease, background 0.25s ease;
+    }
+    .intensity-header:hover { background: var(--surface2); }
+    .intensity-block.open .intensity-header {
+      border-radius: 12px 12px 0 0;
+      border-bottom-color: transparent;
+    }
+    .intensity-chevron {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+    }
+    .intensity-block.open .intensity-chevron { transform: rotate(180deg); }
+    .ex-grid-wrap {
+      overflow: hidden;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 12px 12px;
+      padding: 0 1rem;
+      height: 0;
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: height 0.35s ease,
+                  opacity 0.28s ease,
+                  transform 0.3s ease,
+                  padding 0.3s ease;
+    }
+    .intensity-block.open .ex-grid-wrap {
+      opacity: 1;
+      transform: translateY(0);
+      padding: 1rem;
+    }
+    .ex-grid-wrap .ex-grid { margin-top: 0; }
+    .intensity-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.35rem 1rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid;
+      flex-shrink: 0;
+    }
+    .pill-low  { color: var(--low);  border-color: var(--low);  background: var(--low-bg);  }
+    .pill-med  { color: var(--med);  border-color: var(--med);  background: var(--med-bg);  }
+    .pill-high { color: var(--high); border-color: var(--high); background: var(--high-bg); }
+    .intensity-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      flex: 1;
+    }
+    .intensity-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── EXERCISE GRID ── */
+    .ex-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ── EXERCISE CARD ── */
+    .ex-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.18s ease;
+    }
+    .ex-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(0,0,0,0.4);
+    }
+    .ex-card.low:hover  { border-color: rgba(74,222,128,0.4); }
+    .ex-card.med:hover  { border-color: rgba(250,204,21,0.4); }
+    .ex-card.high:hover { border-color: rgba(248,113,113,0.4); }
+    .ex-card.open { }
+
+    .ex-top {
+      padding: 1rem 1.1rem 0.75rem;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+    .ex-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .ex-name {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .ex-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.2rem;
+    }
+
+    .ex-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+      padding: 0 1.1rem 0.85rem;
+    }
+    .tag {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: var(--surface2);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .ex-dose {
+      margin: 0 1.1rem 0.9rem;
+      background: var(--surface2);
+      border-radius: 8px;
+      padding: 0.5rem 0.75rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .dose-item { font-size: 0.75rem; }
+    .dose-label { color: var(--text-muted); font-size: 0.65rem; display: block; }
+    .dose-val { font-weight: 700; color: var(--text); }
+
+    /* Accordion body */
+    .ex-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      padding: 0 1.1rem;
+      height: 0;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: height 0.32s ease,
+                  opacity 0.25s ease,
+                  transform 0.28s ease,
+                  padding 0.28s ease;
+    }
+    .ex-card.open .ex-body {
+      opacity: 1;
+      transform: translateY(0);
+      padding: 1rem 1.1rem;
+    }
+
+    .ex-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .ex-desc strong { color: var(--text); }
+
+    .tips-title {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 0.35rem;
+    }
+    .tips {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .tips li {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      padding-left: 1rem;
+      position: relative;
+    }
+    .tips li::before {
+      content: '›';
+      position: absolute; left: 0;
+      color: var(--orange);
+      font-weight: 700;
+    }
+
+    .ex-chevron {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      padding: 0.4rem;
+      border-top: 1px solid var(--border);
+      transition: color 0.15s;
+    }
+    .ex-card:hover .ex-chevron { color: var(--orange); }
+    .ex-card.open .ex-chevron { color: var(--orange); }
+    .ex-chevron span { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); display: inline-block; }
+    .ex-card.open .ex-chevron span { transform: rotate(180deg); }
+
+    /* ── HOW TO USE BOX ── */
+    .how-to {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 2.5rem;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .how-item { flex: 1; min-width: 180px; }
+    .how-num {
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--orange);
+      line-height: 1;
+    }
+    .how-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0.25rem 0 0.15rem;
+    }
+    .how-desc { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      padding: 1.5rem 1.25rem;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .footer-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .footer-text {
+      flex: 1;
+      text-align: left;
+    }
+    .footer-signature {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-shrink: 0;
+    }
+    .sig-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+        .sig-logo-img {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      opacity: 0.88;
+    }
+    .sig-logo {
+      height: 44px;
+      width: auto;
+      opacity: 0.85;
+
+      border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+      .ex-grid { grid-template-columns: 1fr; }
+      .how-to { gap: 0.75rem; padding: 1rem; }
+      .how-item { min-width: 100%; }
+      main { padding: 1.25rem 0.85rem 2.5rem; }
+      header { padding: 1.5rem 1rem 1.25rem; }
+      header h1 { font-size: 1.65rem; }
+      .header-brand { position: static; display: flex; justify-content: center; margin-bottom: 0.75rem; }
+      .athlete-tag { font-size: 0.75rem; }
+      .intensity-desc { display: none; }
+      .intensity-header { gap: 0.6rem; padding: 0.65rem 0.75rem; }
+      .ex-dose { flex-wrap: wrap; gap: 0.5rem; }
+      .legend { gap: 0.75rem; font-size: 0.7rem; flex-direction: column; align-items: flex-start; padding: 0.75rem 1rem; }
+      .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+      .footer-text { text-align: center; }
+
+      .header-tip { font-size: 0.7rem; padding: 0.3rem 0.75rem; }
+    }
+    @media (max-width: 360px) {
+      header h1 { font-size: 1.4rem; }
+      .intensity-pill { font-size: 0.65rem; padding: 0.3rem 0.7rem; }
+    }
+
+    /* ── SESSIONI ESEMPIO ── */
+    .sessions-section {
+      margin-top: 2.5rem;
+    }
+    .sessions-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 700;
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    .sessions-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .sessions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+    }
+    .session-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .session-header {
+      padding: 1rem 1.25rem 0.85rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .session-type {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .session-name {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.25;
+    }
+    .session-meta {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+    }
+    .session-body {
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .session-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 0.6rem 0.75rem;
+      border-radius: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+    }
+    .step-num {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--orange);
+      min-width: 18px;
+      padding-top: 0.1rem;
+      flex-shrink: 0;
+    }
+    .step-content { flex: 1; }
+    .step-name {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .step-detail {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 0.15rem;
+    }
+    .step-pill {
+      font-size: 0.6rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid;
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .sp-low  { color: var(--low);  border-color: var(--low);  background: var(--low-bg);  }
+    .sp-med  { color: var(--med);  border-color: var(--med);  background: var(--med-bg);  }
+    .sp-high { color: var(--high); border-color: var(--high); background: var(--high-bg); }
+    .session-note {
+      margin-top: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      background: rgba(255,109,0,0.06);
+      border: 1px solid rgba(255,109,0,0.15);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      line-height: 1.6;
+    }
+    .session-note strong { color: var(--orange-light); }
+    @media (max-width: 600px) {
+      .sessions-grid { grid-template-columns: 1fr; }
+    }
+
+    .session-card {
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .session-card { transition: border-color 0.25s ease, box-shadow 0.25s ease; }
+    .session-card:hover { border-color: rgba(255,109,0,0.4); box-shadow: 0 4px 20px rgba(0,0,0,0.35); }
+    .session-body {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      overflow: hidden;
+      padding: 0 1.25rem;
+      height: 0;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: height 0.32s ease,
+                  opacity 0.25s ease,
+                  transform 0.28s ease,
+                  padding 0.28s ease;
+    }
+    .session-card.open .session-body {
+      opacity: 1;
+      transform: translateY(0);
+      padding: 1rem 1.25rem;
+    }
+    .session-chevron {
+      font-size: 0.65rem;
+      color: var(--orange-light);
+      margin-top: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .session-chevron span { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: inline-block; }
+    .session-card.open .session-chevron span { transform: rotate(180deg); }
+    .session-card.open .session-chevron { color: var(--orange); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <!-- brand top-left -->
+  <div class="header-brand">
+    <img class="brand-logo-bg" src="data:image/png;base64,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" alt="Logo AS"/>
+    <div class="brand-name">Alessandro<br>Sciandra</div>
+  </div>
+
+  <div class="athlete-tag">👤 Scheda per <strong>Simone Galiotti</strong></div>
+  <h1>Esercizi di <em>Rapidità</em></h1>
+  <p>Una libreria di esercizi da integrare liberamente al tuo allenamento</p>
+  <div class="header-tip">
+    💡 Scegli 3–5 esercizi per sessione in base a come ti senti
+  </div>
+</header>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><span class="dot dot-low"></span> Bassa intensità — attivazione, tecnica, giorni di stanchezza</div>
+  <div class="legend-item"><span class="dot dot-med"></span> Media intensità — allenamento standard</div>
+  <div class="legend-item"><span class="dot dot-high"></span> Alta intensità — massimo sforzo, buona forma fisica richiesta</div>
+</div>
+
+<main>
+
+  <!-- HOW TO USE -->
+  <div class="how-to">
+    <div class="how-item">
+      <div class="how-num">01</div>
+      <div class="how-label">Prima di tutto</div>
+      <div class="how-desc">Inserisci gli esercizi di rapidità all'inizio dell'allenamento, dopo 5–10 min di riscaldamento.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">02</div>
+      <div class="how-label">Quanti sceglierne</div>
+      <div class="how-desc">3–4 esercizi per sessione sono sufficienti. Non esagerare: la rapidità si allena "fresca".</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">03</div>
+      <div class="how-label">Come combinarli</div>
+      <div class="how-desc">Inizia sempre con 1 esercizio a bassa intensità, poi sali di livello. Non mischiare troppi alta intensità nello stesso giorno.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-num">2×</div>
+      <div class="how-label">A settimana</div>
+      <div class="how-desc">Con 2 sessioni settimanali, alterni i livelli: un giorno media+alta, uno bassa+media.</div>
+    </div>
+  </div>
+
+  <!-- ══ BASSA INTENSITÀ ══ -->
+  <div class="intensity-block" id="block-low">
+    <div class="intensity-header" onclick="toggleBlock('block-low')">
+      <div class="intensity-pill pill-low">🟢 Bassa intensità</div>
+      <div class="intensity-desc">Coordinazione, tecnica, attivazione — ideale quando sei stanca o come warm-up</div>
+      <span class="intensity-chevron">▼</span>
+    </div>
+    <div class="ex-grid-wrap">
+    <div class="ex-grid">
+
+      <!-- 1 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🦵</div>
+          <div>
+            <div class="ex-name">A-Skip (Marcia con ginocchio alto)</div>
+            <div class="ex-sub">Frequenza · Coordinazione</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Warm-up</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">2 × 20 m</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">30s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Cammina con passo ritmico sollevando il ginocchio all'altezza dell'anca, spingendo attivamente il piede a terra. Mantieni le braccia in movimento sincronizzato. <strong>Non correre</strong> — il ritmo deve essere controllato e tecnico.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Punta il piede verso l'alto (dorsiflexion) prima di appoggiarlo.</li>
+              <li>Busto eretto, sguardo avanti — non guardare i piedi.</li>
+              <li>Braccia a 90°, gomiti indietro in modo deciso.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 2 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">👟</div>
+          <div>
+            <div class="ex-name">Skipping Basso</div>
+            <div class="ex-sub">Frequenza dei passi · Attivazione</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Warm-up</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">2 × 20 m</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">30s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Passi rapidi e bassi avanzando lungo la linea. Il ginocchio sale solo fino all'altezza della coscia. L'obiettivo è la <strong>massima frequenza possibile</strong> mantenendo il contatto col suolo breve e reattivo.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Atterra sull'avampiede — mai sul tallone.</li>
+              <li>Tieni le spalle rilassate, non rigide.</li>
+              <li>Aumenta la velocità delle braccia per guidare la frequenza delle gambe.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 3 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🪜</div>
+          <div>
+            <div class="ex-name">Ladder — Due Passi Avanti</div>
+            <div class="ex-sub">Coordinazione · Sequenza piedi</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Scala agilità</span>
+          <span class="tag">Coordinazione</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">30s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Avanza lungo la scala coordinativa mettendo <strong>entrambi i piedi in ogni riquadro</strong>, uno alla volta. Passo destro + passo sinistro → avanza al prossimo riquadro. Parti lento, poi aumenta la velocità serie dopo serie.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Non guardare la scala — alza lo sguardo.</li>
+              <li>Ginocchia leggermente flesse per tutto il percorso.</li>
+              <li>Braccia attive per aumentare il ritmo.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 4 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">↔️</div>
+          <div>
+            <div class="ex-name">Shuffle Laterale</div>
+            <div class="ex-sub">Mobilità · Cambio direzione base</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Lateralità</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">2 × 10 m</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">30s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Spostamento laterale rapido senza incrociare i piedi. Fianchi bassi, peso sull'avampiede, passi veloci e controllati. Alterna il lato ogni ripetizione (prima a destra, poi a sinistra).
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Non incrociare mai i piedi — mantieni la base d'appoggio stabile.</li>
+              <li>Centro di gravità basso per tutto il movimento.</li>
+              <li>Braccia aperte per l'equilibrio laterale.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+    </div>
+    </div><!-- /ex-grid-wrap -->
+  </div>
+
+  <!-- ══ MEDIA INTENSITÀ ══ -->
+  <div class="intensity-block" id="block-med">
+    <div class="intensity-header" onclick="toggleBlock('block-med')">
+      <div class="intensity-pill pill-med">🟡 Media intensità</div>
+      <div class="intensity-desc">Velocità e coordinazione avanzata — il pane quotidiano dell'allenamento di rapidità</div>
+      <span class="intensity-chevron">▼</span>
+    </div>
+    <div class="ex-grid-wrap">
+    <div class="ex-grid">
+
+      <!-- 5 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🪜</div>
+          <div>
+            <div class="ex-name">Ladder — In & Out Laterale</div>
+            <div class="ex-sub">Coordinazione avanzata · Frequenza</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Scala agilità</span>
+          <span class="tag">Coordinazione</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">45s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Avanza di lato lungo la scala: apri i piedi fuori dai bordi del riquadro e richiudili dentro alternativamente. Schema: <strong>fuori-fuori → dentro-dentro → avanza</strong>. Ritmo continuo senza pause.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Mantieni il busto rivolto lateralmente per tutto il percorso.</li>
+              <li>I passi "fuori" devono essere decisi, non esitanti.</li>
+              <li>Esegui la prima volta piano per imparare il pattern, poi aumenta.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🔀</div>
+          <div>
+            <div class="ex-name">Carioca</div>
+            <div class="ex-sub">Coordinazione incrociata · Lateralità</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Coordinazione</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">2 × 15 m</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">45s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Spostamento laterale <strong>incrociando</strong> i piedi alternativamente davanti e dietro. Busto rivolto di lato, fianchi che ruotano in modo fluido. È un esercizio tecnico — non andare a velocità massima finché il pattern non è automatico.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Le anche devono ruotare — non irrigidire il busto.</li>
+              <li>Talloni mai a terra: sempre sull'avampiede.</li>
+              <li>Braccia aperte e basse per aiutare la rotazione del bacino.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 7 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">📦</div>
+          <div>
+            <div class="ex-name">Box Drill — 4 Coni</div>
+            <div class="ex-sub">Multidirezionale · Cambi di ritmo</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">4 coni</span>
+          <span class="tag">Box 5×5 m</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Giri</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">60s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            4 coni agli angoli di un quadrato 5×5 m. Ogni lato del box si percorre in modo diverso: <strong>sprint avanti → shuffle laterale → corsa all'indietro → shuffle laterale</strong>. Alterna senso orario e antiorario ogni giro.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Posizione bassa per tutto il giro — non alzarti tra un movimento e l'altro.</li>
+              <li>Transizioni sui coni rapide: non fermarti, usa il cono come segnale visivo.</li>
+              <li>Target: completare ogni giro in meno di 9 secondi.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 8 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🎯</div>
+          <div>
+            <div class="ex-name">Shuttle Run — Navetta 10 m</div>
+            <div class="ex-sub">Accelerazione · Decelerazione</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">2 coni</span>
+          <span class="tag">10 m</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">60s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Due coni a 10 m di distanza. <strong>Sprint andata e ritorno</strong> toccando il cono con la mano a ogni inversione. L'obiettivo è frenare il più velocemente possibile e ripartire subito. Conta i giri in 15 secondi per monitorare i progressi.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Frena abbassando il centro di gravità — non rallentare a passi lunghi.</li>
+              <li>Pianta il piede esterno deciso prima di ripartire.</li>
+              <li>Non guardare a terra mentre corri: sguardo sul cono di destinazione.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 9 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">⚡</div>
+          <div>
+            <div class="ex-name">Skipping Rapido + Sprint (15+20 m)</div>
+            <div class="ex-sub">Frequenza neuromuscolare · Transizione</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Combinato</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">75s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            <strong>15 m di skipping ad alta frequenza</strong> (passi piccoli e rapidi, ginocchia all'anca) seguiti immediatamente da <strong>sprint a velocità massima per 20 m</strong>. La transizione deve essere istantanea, senza pausa tra le due fasi.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Durante lo skipping: braccia veloci, respiro ritmico.</li>
+              <li>Alla transizione: primo passo lungo e basso, busto inclinato in avanti.</li>
+              <li>Non saltare in su nella transizione — spingi orizzontalmente.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+    </div>
+    </div><!-- /ex-grid-wrap -->
+  </div>
+
+  <!-- ══ ALTA INTENSITÀ ══ -->
+  <div class="intensity-block" id="block-high">
+    <div class="intensity-header" onclick="toggleBlock('block-high')">
+      <div class="intensity-pill pill-high">🔴 Alta intensità</div>
+      <div class="intensity-desc">Massimo sforzo — solo a inizio sessione, riposata, max 2–3 esercizi per allenamento</div>
+      <span class="intensity-chevron">▼</span>
+    </div>
+    <div class="ex-grid-wrap">
+    <div class="ex-grid">
+
+      <!-- 10 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🚦</div>
+          <div>
+            <div class="ex-name">Reattività su Segnale Visivo</div>
+            <div class="ex-sub">Tempo di reazione · Sprint esplosivo</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Con partner</span>
+          <span class="tag">15–20 m</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">6–8</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">60s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            In posizione di pronto (peso sull'avampiede, leggero dondolìo). Il partner indica una direzione con la mano o alza un braccio — <strong>reagisci con sprint immediato di 15 m</strong> nella direzione segnalata. Variante: sprint su fischio.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Posizione di partenza attiva: non stare ferma e rigida — dondola leggermente.</li>
+              <li>Non anticipare il segnale: aspetta davvero lo stimolo.</li>
+              <li>Primo passo: piede che spinge il terreno, non si solleva passivamente.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 11 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🔁</div>
+          <div>
+            <div class="ex-name">Shuttle Run 5-10-5</div>
+            <div class="ex-sub">Cambi di direzione esplosivi</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">3 coni</span>
+          <span class="tag">20 m totali</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">1</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">90s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            3 coni in linea: <strong>A (centro) — 5 yd → B — 10 yd → C</strong>. Parti da A, sprint a B (5 yd), tocca, torna e supera A fino a C (10 yd), poi rientra ad A. Cronometra ogni tentativo. Target: &lt;5 secondi.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Abbassa il centro di gravità prima di ogni cambio.</li>
+              <li>"Taglia" al cono: non rallentare prima, frena nell'ultimo passo utile.</li>
+              <li>Pianta il piede esterno deciso per la spinta in avanti.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 12 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">⊤</div>
+          <div>
+            <div class="ex-name">T-Drill</div>
+            <div class="ex-sub">Agilità completa · Multidirezionale</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">4 coni</span>
+          <span class="tag">Schema a T</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">1</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">2 min</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            4 coni a forma di T: <strong>A</strong> (partenza) — 10 yd avanti <strong>B</strong> — 5 yd sx <strong>C</strong> — 5 yd dx <strong>D</strong>. Schema: sprint A→B → shuffle sx fino a C → shuffle dx fino a D → shuffle torna a B → corsa all'indietro fino ad A. Target: &lt;10s.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Nei shuffle non incrociare i piedi.</li>
+              <li>Nella corsa all'indietro: peso in avanti, non cadere sui talloni.</li>
+              <li>Alterna il lato di svolta ogni serie (prima gira sx, poi dx).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 13 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">💨</div>
+          <div>
+            <div class="ex-name">Sprint Massimale 30 m</div>
+            <div class="ex-sub">Velocità di punta · Potenza esplosiva</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">30 m</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">2 min</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Sprint rettilineo a <strong>velocità massimale</strong> su 30 m. Partenza da ferma o da bassa posizione. Concentrati sull'accelerazione nei primi 10 m (fase di spinta) e sulla meccanica nei 20 m successivi (fase di volo). Non forzare — la velocità è conseguenza della tecnica.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Nei primi 10 m: busto inclinato avanti, passi corti e potenti.</li>
+              <li>Oltre i 10 m: raddrizza il busto, allunga il passo, rilassa il viso e le spalle.</li>
+              <li>Braccia a 90°, oscillano avanti-indietro (non di lato).</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 14 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🔶</div>
+          <div>
+            <div class="ex-name">Slalom Coni Ravvicinati</div>
+            <div class="ex-sub">Agilità · Cambi di direzione continui</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">6–8 coni</span>
+          <span class="tag">1 m di distanza</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">75s</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            6–8 coni in linea retta distanziati di 1 m. Slalom a velocità massima zigzagando tra i coni. <strong>Variante con palla</strong>: slalom con dribbling (riduce la velocità ma integra la componente tecnica calcistica).
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Abbassa il centro di gravità nei cambi — non saltare.</li>
+              <li>Usa il piede interno per le curve strette.</li>
+              <li>Con la palla: tocchi ravvicinati, non calciare lontano.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+    </div>
+    </div><!-- /ex-grid-wrap -->
+  </div>
+
+  <!-- ══ SESSIONI ESEMPIO ══ -->
+  <div class="sessions-section">
+    <div class="sessions-title">📋 Esempi di sessione</div>
+    <div class="sessions-grid">
+
+      <!-- Sessione A -->
+      <div class="session-card" onclick="toggleSession(this)">
+        <div class="session-header">
+          <div class="session-type">Sessione A</div>
+          <div class="session-name">Giornata Standard</div>
+          <div class="session-meta">⏱ ~25 min &nbsp;·&nbsp; Martedì o Giovedì</div>
+          <div class="session-chevron"><span>▾</span> mostra sessione</div>
+        </div>
+        <div class="session-body">
+          <div class="session-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-name">A-Skip · Skipping Basso</div>
+              <div class="step-detail">3 × 20 m · recupero 30s tra i due esercizi</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-name">Ladder — Due Passi Avanti</div>
+              <div class="step-detail">4 serie × 3 rip. · recupero 30s</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-name">Carioca</div>
+              <div class="step-detail">3 × 15 m per lato · recupero 45s</div>
+            </div>
+            <span class="step-pill sp-med">Media</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-name">Shuttle Run — Navetta 10 m</div>
+              <div class="step-detail">4 serie × 4 rip. · recupero 60s</div>
+            </div>
+            <span class="step-pill sp-med">Media</span>
+          </div>
+          <div class="session-note">
+            <strong>💡 Quando usarla:</strong> nella maggior parte degli allenamenti. Buon mix tecnica + velocità senza sovraccaricare il sistema nervoso.
+          </div>
+        </div>
+      </div>
+
+      <!-- Sessione B -->
+      <div class="session-card" onclick="toggleSession(this)">
+        <div class="session-header">
+          <div class="session-type">Sessione B</div>
+          <div class="session-name">Giornata Intensa</div>
+          <div class="session-meta">⏱ ~30 min &nbsp;·&nbsp; Solo se riposato</div>
+          <div class="session-chevron"><span>▾</span> mostra sessione</div>
+        </div>
+        <div class="session-body">
+          <div class="session-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-name">Shuffle Laterale</div>
+              <div class="step-detail">4 × 10 m · recupero 30s — attivazione</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-name">Skipping Rapido + Sprint 15+20 m</div>
+              <div class="step-detail">3 serie × 4 rip. · recupero 75s</div>
+            </div>
+            <span class="step-pill sp-med">Media</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-name">Reattività su Segnale Visivo</div>
+              <div class="step-detail">3 serie × 6 rip. · recupero 60s</div>
+            </div>
+            <span class="step-pill sp-high">Alta</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-name">Sprint Massimale 30 m</div>
+              <div class="step-detail">3 serie × 4 rip. · recupero 2 min</div>
+            </div>
+            <span class="step-pill sp-high">Alta</span>
+          </div>
+          <div class="session-note">
+            <strong>⚠️ Quando usarla:</strong> una volta a settimana al massimo, a inizio sessione dopo riscaldamento completo. Non usarla il giorno prima di una partita.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">
+      Libreria Esercizi Rapidità · Simone Galiotti &nbsp;|&nbsp; Aprile 2026
+    </div>
+    <div class="footer-signature">
+      <span class="sig-label">A cura di</span>
+      <img src="data:image/png;base64,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" alt="Logo AS" class="sig-logo-img"/>
+    </div></div>
+  </div>
+</footer>
+
+<script>
+  function animatePanel(el, open) {
+    if (open) {
+      el.style.height = 'auto';
+      const h = el.scrollHeight + 'px';
+      el.style.height = '0';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { el.style.height = h; });
+      });
+      el.addEventListener('transitionend', () => {
+        if (el.style.height !== '0px') el.style.height = 'auto';
+      }, { once: true });
+    } else {
+      el.style.height = el.scrollHeight + 'px';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { el.style.height = '0'; });
+      });
+    }
+  }
+
+  function toggle(card) {
+    const body = card.querySelector('.ex-body');
+    const isOpen = card.classList.contains('open');
+    card.classList.toggle('open');
+    animatePanel(body, !isOpen);
+  }
+
+  function toggleBlock(id) {
+    const block = document.getElementById(id);
+    const wrap = block.querySelector('.ex-grid-wrap');
+    const isOpen = block.classList.contains('open');
+    block.classList.toggle('open');
+    animatePanel(wrap, !isOpen);
+  }
+
+  function toggleSession(card) {
+    const body = card.querySelector('.session-body');
+    const isOpen = card.classList.contains('open');
+    card.classList.toggle('open');
+    animatePanel(body, !isOpen);
+  }
+</script>
+</body>
+</html>
