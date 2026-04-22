@@ -126,7 +126,8 @@
       inset: 0;
       width: 100%; height: 100%;
       object-fit: contain;
-      opacity: 0.18;
+      opacity: 0.35;
+      filter: brightness(1.15);
     }
     .brand-name {
       position: absolute;
@@ -260,6 +261,114 @@
     .ex-card.high:hover { border-color: rgba(248,113,113,0.4); }
     .ex-card.open { }
 
+    /* Essential card — always first, mandatory warm-up */
+    .ex-card.essential {
+      border: 2px solid var(--orange);
+      box-shadow: 0 0 0 1px var(--orange), 0 6px 28px rgba(255,109,0,0.28);
+      position: relative;
+      background: linear-gradient(135deg, rgba(255,109,0,0.08), rgba(255,109,0,0.02) 60%, transparent);
+    }
+    .ex-card.essential::before {
+      content: '⭐ SEMPRE — PRIMA DI OGNI SESSIONE ⭐';
+      display: block;
+      background: linear-gradient(90deg, #ff6d00 0%, #ff8a3d 40%, #ffab70 50%, #ff8a3d 60%, #ff6d00 100%);
+      background-size: 250% 100%;
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      padding: 0.65rem 1rem;
+      text-align: center;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+      border-bottom: 2px solid rgba(0,0,0,0.25);
+      box-shadow: inset 0 -6px 14px rgba(0,0,0,0.15), 0 2px 10px rgba(255,109,0,0.35);
+      animation: essential-sweep 3.5s linear infinite;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    @keyframes essential-sweep {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 250% 50%; }
+    }
+    .ex-card.essential:hover {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 1px var(--orange), 0 10px 34px rgba(255,109,0,0.42);
+    }
+    .ex-essential-note {
+      margin: 0.75rem 0 0;
+      padding: 0.6rem 0.8rem;
+      background: rgba(255,109,0,0.1);
+      border: 1px solid rgba(255,109,0,0.3);
+      border-left: 3px solid var(--orange);
+      border-radius: 6px;
+      font-size: 0.75rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .ex-essential-note strong { color: var(--orange-light); }
+    @media (max-width: 480px) {
+      .ex-card.essential::before {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        padding: 0.55rem 0.7rem;
+      }
+    }
+    @media (max-width: 360px) {
+      .ex-card.essential::before {
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+        padding: 0.5rem 0.5rem;
+      }
+    }
+
+    /* Key card — exercises of particular importance (gold/amber) */
+    .ex-card.key {
+      border: 2px solid #ffb300;
+      box-shadow: 0 0 0 1px #ffb300, 0 6px 28px rgba(255,179,0,0.28);
+      position: relative;
+      background: linear-gradient(135deg, rgba(255,179,0,0.10), rgba(255,179,0,0.02) 60%, transparent);
+    }
+    .ex-card.key::before {
+      content: '⚡ ESERCIZIO CHIAVE ⚡';
+      display: block;
+      background: linear-gradient(90deg, #ff8f00 0%, #ffb300 40%, #ffd54f 50%, #ffb300 60%, #ff8f00 100%);
+      background-size: 250% 100%;
+      color: #2a1a00;
+      font-size: 0.84rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      padding: 0.62rem 1rem;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(255,255,255,0.3);
+      border-bottom: 2px solid rgba(0,0,0,0.3);
+      box-shadow: inset 0 -6px 14px rgba(0,0,0,0.1), 0 2px 10px rgba(255,179,0,0.38);
+      animation: key-sweep 3.5s linear infinite;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+    @keyframes key-sweep {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 250% 50%; }
+    }
+    .ex-card.key:hover {
+      border-color: #ffb300;
+      box-shadow: 0 0 0 1px #ffb300, 0 10px 34px rgba(255,179,0,0.45);
+    }
+    @media (max-width: 480px) {
+      .ex-card.key::before {
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        padding: 0.55rem 0.7rem;
+      }
+    }
+    @media (max-width: 360px) {
+      .ex-card.key::before {
+        font-size: 0.62rem;
+        letter-spacing: 0.05em;
+        padding: 0.5rem 0.5rem;
+      }
+    }
+
     .ex-top {
       padding: 1rem 1.1rem 0.75rem;
       display: flex;
@@ -382,16 +491,64 @@
     .ex-chevron span { transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); display: inline-block; }
     .ex-card.open .ex-chevron span { transform: rotate(180deg); }
 
-    /* ── HOW TO USE BOX ── */
-    .how-to {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1.25rem 1.5rem;
+    /* ── HOW TO USE COLLAPSIBLE ── */
+    .how-to-section {
       margin-bottom: 2.5rem;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+    .how-to-header {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(255,109,0,0.10), rgba(255,109,0,0.02));
+      transition: background 0.25s ease;
+      user-select: none;
+    }
+    .how-to-header:hover { background: linear-gradient(135deg, rgba(255,109,0,0.16), rgba(255,109,0,0.04)); }
+    .how-to-icon { font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
+    .how-to-info { flex: 1; min-width: 0; }
+    .how-to-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 800;
+      margin-bottom: 0.15rem;
+    }
+    .how-to-title {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .how-to-chevron {
+      font-size: 1.05rem;
+      color: var(--orange);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+    }
+    .how-to-section.open .how-to-chevron { transform: rotate(180deg); }
+    .how-to-body {
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
+      transition: height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+    }
+    .how-to-section.open .how-to-body {
+      opacity: 1;
+      height: auto;
+    }
+    .how-to {
+      padding: 1.25rem 1.5rem;
       display: flex;
       gap: 2rem;
       flex-wrap: wrap;
+      border-top: 1px solid var(--border);
     }
     .how-item { flex: 1; min-width: 180px; }
     .how-num {
@@ -407,6 +564,11 @@
       margin: 0.25rem 0 0.15rem;
     }
     .how-desc { font-size: 0.75rem; color: var(--text-muted); }
+    @media (max-width: 600px) {
+      .how-to-header { padding: 0.85rem 1rem; }
+      .how-to-title { font-size: 0.92rem; }
+      .how-to { padding: 1rem 1.1rem; gap: 1.1rem; }
+    }
 
     /* ── FOOTER ── */
     footer {
@@ -506,6 +668,16 @@
       height: 1px;
       background: var(--border);
     }
+    .sessions-hint {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin: -0.5rem 0 1.1rem;
+      padding: 0.5rem 0.85rem;
+      background: rgba(255,109,0,0.05);
+      border: 1px dashed rgba(255,109,0,0.22);
+      border-radius: 8px;
+      line-height: 1.5;
+    }
     .sessions-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -555,6 +727,42 @@
       border-radius: 8px;
       background: var(--surface2);
       border: 1px solid var(--border);
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.12s ease;
+    }
+    .session-step[data-ref] {
+      cursor: pointer;
+      position: relative;
+      padding-right: 1.6rem;
+    }
+    .session-step[data-ref]::after {
+      content: '↗';
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.75rem;
+      color: var(--orange);
+      opacity: 0.55;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .session-step[data-ref]:hover {
+      background: rgba(255,109,0,0.08);
+      border-color: rgba(255,109,0,0.35);
+    }
+    .session-step[data-ref]:hover::after {
+      opacity: 1;
+      transform: translateY(-50%) translateX(2px);
+    }
+    .session-step[data-ref]:active { transform: scale(0.99); }
+
+    @keyframes ex-highlight-pulse {
+      0%   { box-shadow: 0 0 0 0 rgba(255,109,0,0.55); }
+      50%  { box-shadow: 0 0 0 10px rgba(255,109,0,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,109,0,0); }
+    }
+    .ex-card.highlight-pulse {
+      animation: ex-highlight-pulse 1.2s ease-out 2;
+      border-color: var(--orange) !important;
     }
     .step-num {
       font-size: 0.65rem;
@@ -641,6 +849,158 @@
     .session-chevron span { transition: transform 0.35s cubic-bezier(0.4,0,0.2,1); display: inline-block; }
     .session-card.open .session-chevron span { transform: rotate(180deg); }
     .session-card.open .session-chevron { color: var(--orange); }
+
+    /* ── CATEGORIE PRINCIPALI (Corsa / Palestra) ── */
+    .category {
+      margin: 2.2rem 0;
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--surface2), var(--surface));
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    }
+    .category-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.3rem 1.5rem;
+      cursor: pointer;
+      user-select: none;
+      background: linear-gradient(135deg, rgba(255,109,0,0.12), rgba(255,109,0,0.02));
+      border-bottom: 1px solid transparent;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+    .category.open > .category-header {
+      border-bottom-color: var(--border);
+      background: linear-gradient(135deg, rgba(255,109,0,0.18), rgba(255,109,0,0.04));
+    }
+    .category-header:hover {
+      background: linear-gradient(135deg, rgba(255,109,0,0.22), rgba(255,109,0,0.06));
+    }
+    .category-icon {
+      font-size: 2rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .category-info { flex: 1; min-width: 0; }
+    .category-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--orange);
+      font-weight: 800;
+      margin-bottom: 0.25rem;
+    }
+    .category-name {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .category-desc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.35rem;
+      line-height: 1.4;
+    }
+    .category-chevron {
+      font-size: 1.2rem;
+      color: var(--orange);
+      transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+      flex-shrink: 0;
+    }
+    .category.open > .category-header .category-chevron { transform: rotate(180deg); }
+    .category-body {
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
+      transition: height 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+      padding: 0 1.3rem;
+    }
+    .category.open > .category-body {
+      opacity: 1;
+      height: auto;
+      padding: 1rem 1.3rem 1.5rem;
+    }
+    .category-empty {
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      border: 2px dashed var(--border);
+      border-radius: 12px;
+      background: rgba(255,255,255,0.02);
+    }
+    .category-empty-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+    .category-empty strong { color: var(--orange-light); }
+    .category-empty-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--orange-light);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+    .category-empty-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      max-width: 480px;
+      margin: 0 auto 1.3rem;
+    }
+    .working-signature {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.7rem 1.2rem;
+      background: linear-gradient(135deg, rgba(255,109,0,0.15), rgba(255,109,0,0.05));
+      border: 1px solid rgba(255,109,0,0.35);
+      border-radius: 999px;
+      font-size: 0.82rem;
+      color: var(--text);
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .working-signature .gear {
+      display: inline-block;
+      animation: gear-spin 3s linear infinite;
+      font-size: 1.05rem;
+    }
+    .working-signature strong {
+      color: var(--orange-light);
+      font-weight: 800;
+    }
+    @keyframes gear-spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .working-sub {
+      margin-top: 0.9rem;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    @media (max-width: 600px) {
+      .category { margin: 1.6rem 0; border-radius: 14px; }
+      .category-header { padding: 1rem 1.1rem; gap: 0.75rem; }
+      .category-icon { font-size: 1.6rem; }
+      .category-name { font-size: 1.15rem; }
+      .category-desc { font-size: 0.72rem; }
+      .category-body { padding: 0 0.9rem; }
+      .category.open > .category-body { padding: 0.75rem 0.9rem 1.1rem; }
+    }
+    @media (max-width: 360px) {
+      .category-name { font-size: 1rem; }
+      .category-label { font-size: 0.58rem; letter-spacing: 0.12em; }
+    }
   </style>
 </head>
 <body>
@@ -661,55 +1021,113 @@
   </div>
 </header>
 
-<!-- LEGEND -->
-<div class="legend">
-  <div class="legend-item"><span class="dot dot-low"></span> Bassa intensità — attivazione, tecnica, giorni di stanchezza</div>
-  <div class="legend-item"><span class="dot dot-med"></span> Media intensità — allenamento standard</div>
-  <div class="legend-item"><span class="dot dot-high"></span> Alta intensità — massimo sforzo, buona forma fisica richiesta</div>
-</div>
-
 <main>
 
-  <!-- HOW TO USE -->
-  <div class="how-to">
-    <div class="how-item">
-      <div class="how-num">01</div>
-      <div class="how-label">Prima di tutto</div>
-      <div class="how-desc">Inserisci gli esercizi di rapidità all'inizio dell'allenamento, dopo 5–10 min di riscaldamento.</div>
+  <!-- HOW TO USE (collapsible) -->
+  <div class="how-to-section" id="how-to-section">
+    <div class="how-to-header" onclick="toggleHowTo()">
+      <div class="how-to-icon">📖</div>
+      <div class="how-to-info">
+        <div class="how-to-label">Istruzioni</div>
+        <div class="how-to-title">Come usare la scheda</div>
+      </div>
+      <div class="how-to-chevron">▾</div>
     </div>
-    <div class="how-item">
-      <div class="how-num">02</div>
-      <div class="how-label">Quanti sceglierne</div>
-      <div class="how-desc">3–4 esercizi per sessione sono sufficienti. Non esagerare: la rapidità si allena "fresca".</div>
-    </div>
-    <div class="how-item">
-      <div class="how-num">03</div>
-      <div class="how-label">Come combinarli</div>
-      <div class="how-desc">Inizia sempre con 1 esercizio a bassa intensità, poi sali di livello. Non mischiare troppi alta intensità nello stesso giorno.</div>
-    </div>
-    <div class="how-item">
-      <div class="how-num">2×</div>
-      <div class="how-label">A settimana</div>
-      <div class="how-desc">Con 2 sessioni settimanali, alterni i livelli: un giorno media+alta, uno bassa+media.</div>
+    <div class="how-to-body">
+      <div class="how-to">
+        <div class="how-item">
+          <div class="how-num">01</div>
+          <div class="how-label">Prima di tutto</div>
+          <div class="how-desc">Inserisci gli esercizi di rapidità all'inizio dell'allenamento, dopo 5–10 min di riscaldamento.</div>
+        </div>
+        <div class="how-item">
+          <div class="how-num">02</div>
+          <div class="how-label">Quanti sceglierne</div>
+          <div class="how-desc">3–4 esercizi per sessione sono sufficienti. Non esagerare: la rapidità si allena "fresca".</div>
+        </div>
+        <div class="how-item">
+          <div class="how-num">03</div>
+          <div class="how-label">Come combinarli</div>
+          <div class="how-desc">Inizia sempre con 1 esercizio a bassa intensità, poi sali di livello. Non mischiare troppi alta intensità nello stesso giorno.</div>
+        </div>
+        <div class="how-item">
+          <div class="how-num">2×</div>
+          <div class="how-label">A settimana</div>
+          <div class="how-desc">Con 2 sessioni settimanali, alterni i livelli: un giorno media+alta, uno bassa+media.</div>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- ══════════════════════════════════════════
+       CATEGORIA: CORSA
+       ══════════════════════════════════════════ -->
+  <div class="category open" id="cat-corsa">
+    <div class="category-header" onclick="toggleCategory('cat-corsa')">
+      <div class="category-icon">🏃‍♂️</div>
+      <div class="category-info">
+        <div class="category-label">Categoria</div>
+        <div class="category-name">Corsa</div>
+        <div class="category-desc">Tutti gli esercizi di rapidità e le sessioni tipo — bassa, media e alta intensità</div>
+      </div>
+      <div class="category-chevron">▾</div>
+    </div>
+    <div class="category-body">
 
   <!-- ══ BASSA INTENSITÀ ══ -->
   <div class="intensity-block" id="block-low">
     <div class="intensity-header" onclick="toggleBlock('block-low')">
       <div class="intensity-pill pill-low">🟢 Bassa intensità</div>
-      <div class="intensity-desc">Coordinazione, tecnica, attivazione — ideale quando sei stanca o come warm-up</div>
+      <div class="intensity-desc">Coordinazione, tecnica, attivazione — ideale quando sei stanco o come warm-up</div>
       <span class="intensity-chevron">▼</span>
     </div>
     <div class="ex-grid-wrap">
     <div class="ex-grid">
 
+      <!-- 0 — ESSENZIALE -->
+      <div class="ex-card low essential" id="ex-mobilita" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🧘</div>
+          <div>
+            <div class="ex-name">Mobilità Dinamica</div>
+            <div class="ex-sub">Postura · Fluidità articolare</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Warm-up</span>
+          <span class="tag">Recupero attivo</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Blocchi</span><span class="dose-val">2</span></div>
+          <div class="dose-item"><span class="dose-label">Durata</span><span class="dose-val">10' continui</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">—</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Sequenza fluida di <strong>cerchi con le braccia</strong> (avanti/dietro), <strong>cerchi con le gambe</strong> (anca, ginocchio), <strong>torsioni del busto</strong> e affondi in camminata. Flusso continuo, senza pause. Ottimo sia come warm-up sia come scarico.
+          </div>
+          <div class="ex-essential-note">
+            ⚠️ <strong>Da non saltare mai.</strong> Inseriscila all'inizio di <strong>ogni</strong> sessione — è il warm-up minimo obbligatorio che prepara muscoli, articolazioni e sistema nervoso. Senza di lei, rischi infortuni anche con esercizi a bassa intensità.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Respiro nasale, profondo e ritmato.</li>
+              <li>Movimenti ampi ma controllati — non rigidi né molli.</li>
+              <li>Se senti tensione in una zona, resta lì un ciclo in più.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
       <!-- 1 -->
-      <div class="ex-card low" onclick="toggle(this)">
+      <div class="ex-card low" id="ex-skip-alto" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🦵</div>
           <div>
-            <div class="ex-name">A-Skip (Marcia con ginocchio alto)</div>
+            <div class="ex-name">Skip Alto</div>
             <div class="ex-sub">Frequenza · Coordinazione</div>
           </div>
         </div>
@@ -739,7 +1157,7 @@
       </div>
 
       <!-- 2 -->
-      <div class="ex-card low" onclick="toggle(this)">
+      <div class="ex-card low" id="ex-skipping-basso" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">👟</div>
           <div>
@@ -773,17 +1191,18 @@
       </div>
 
       <!-- 3 -->
-      <div class="ex-card low" onclick="toggle(this)">
+      <div class="ex-card low" id="ex-scaletta-due-passi" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🪜</div>
           <div>
-            <div class="ex-name">Ladder — Due Passi Avanti</div>
+            <div class="ex-name">Scaletta — Due Passi Avanti</div>
             <div class="ex-sub">Coordinazione · Sequenza piedi</div>
           </div>
         </div>
         <div class="ex-tags">
-          <span class="tag">Scala agilità</span>
+          <span class="tag">Scaletta</span>
           <span class="tag">Coordinazione</span>
+          <span class="tag">Variante: fune/corda</span>
         </div>
         <div class="ex-dose">
           <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
@@ -792,12 +1211,15 @@
         </div>
         <div class="ex-body">
           <div class="ex-desc">
-            Avanza lungo la scala coordinativa mettendo <strong>entrambi i piedi in ogni riquadro</strong>, uno alla volta. Passo destro + passo sinistro → avanza al prossimo riquadro. Parti lento, poi aumenta la velocità serie dopo serie.
+            Avanza lungo la scaletta mettendo <strong>entrambi i piedi in ogni riquadro</strong>, uno alla volta. Passo destro + passo sinistro → avanza al prossimo riquadro. Parti lento, poi aumenta la velocità serie dopo serie.
+          </div>
+          <div class="ex-essential-note">
+            🔧 <strong>Non hai la scaletta?</strong> Usa una <strong>fune o una corda</strong> stesa a terra, oppure segna i riquadri con del nastro adesivo (ogni riquadro ≈ 40–50 cm). Funziona allo stesso modo.
           </div>
           <div>
             <div class="tips-title">Cues tecnici</div>
             <ul class="tips">
-              <li>Non guardare la scala — alza lo sguardo.</li>
+              <li>Non guardare la scaletta — alza lo sguardo.</li>
               <li>Ginocchia leggermente flesse per tutto il percorso.</li>
               <li>Braccia attive per aumentare il ritmo.</li>
             </ul>
@@ -807,7 +1229,7 @@
       </div>
 
       <!-- 4 -->
-      <div class="ex-card low" onclick="toggle(this)">
+      <div class="ex-card low" id="ex-shuffle-laterale" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">↔️</div>
           <div>
@@ -841,42 +1263,7 @@
       </div>
 
       <!-- 5 -->
-      <div class="ex-card low" onclick="toggle(this)">
-        <div class="ex-top">
-          <div class="ex-icon">🌱</div>
-          <div>
-            <div class="ex-name">Corsa Tecnica Plantare</div>
-            <div class="ex-sub">Tecnica di corsa · Appoggio medio-piede</div>
-          </div>
-        </div>
-        <div class="ex-tags">
-          <span class="tag">Senza attrezzi</span>
-          <span class="tag">Su erba</span>
-          <span class="tag">Recupero attivo</span>
-        </div>
-        <div class="ex-dose">
-          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4–6</span></div>
-          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">100 m</span></div>
-          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">1' camminata</span></div>
-        </div>
-        <div class="ex-body">
-          <div class="ex-desc">
-            Corsa a ritmo blando su erba concentrandoti sull'<strong>appoggio medio-piede</strong> (non tallone, non solo punta). Braccia rilassate, respiro calmo. L'obiettivo è la pulizia tecnica, non la velocità.
-          </div>
-          <div>
-            <div class="tips-title">Cues tecnici</div>
-            <ul class="tips">
-              <li>Immagina di "accarezzare" il terreno — atterraggio silenzioso.</li>
-              <li>Spalle rilassate, mascella molle, mani morbide.</li>
-              <li>Frequenza costante, nessuna accelerazione.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="ex-chevron"><span>▾</span> dettagli</div>
-      </div>
-
-      <!-- 6 -->
-      <div class="ex-card low" onclick="toggle(this)">
+      <div class="ex-card low" id="ex-skip-lenti" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🐌</div>
           <div>
@@ -909,41 +1296,6 @@
         <div class="ex-chevron"><span>▾</span> dettagli</div>
       </div>
 
-      <!-- 7 -->
-      <div class="ex-card low" onclick="toggle(this)">
-        <div class="ex-top">
-          <div class="ex-icon">🧘</div>
-          <div>
-            <div class="ex-name">Mobilità Dinamica</div>
-            <div class="ex-sub">Postura · Fluidità articolare</div>
-          </div>
-        </div>
-        <div class="ex-tags">
-          <span class="tag">Senza attrezzi</span>
-          <span class="tag">Warm-up</span>
-          <span class="tag">Recupero attivo</span>
-        </div>
-        <div class="ex-dose">
-          <div class="dose-item"><span class="dose-label">Blocchi</span><span class="dose-val">2</span></div>
-          <div class="dose-item"><span class="dose-label">Durata</span><span class="dose-val">10' continui</span></div>
-          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">—</span></div>
-        </div>
-        <div class="ex-body">
-          <div class="ex-desc">
-            Sequenza fluida di <strong>cerchi con le braccia</strong> (avanti/dietro), <strong>cerchi con le gambe</strong> (anca, ginocchio), <strong>torsioni del busto</strong> e affondi in camminata. Flusso continuo, senza pause. Ottimo sia come warm-up sia come scarico.
-          </div>
-          <div>
-            <div class="tips-title">Cues tecnici</div>
-            <ul class="tips">
-              <li>Respiro nasale, profondo e ritmato.</li>
-              <li>Movimenti ampi ma controllati — non rigidi né molli.</li>
-              <li>Se senti tensione in una zona, resta lì un ciclo in più.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="ex-chevron"><span>▾</span> dettagli</div>
-      </div>
-
     </div>
     </div><!-- /ex-grid-wrap -->
   </div>
@@ -959,16 +1311,17 @@
     <div class="ex-grid">
 
       <!-- 5 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-scaletta-inout" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🪜</div>
           <div>
-            <div class="ex-name">Ladder — In & Out Laterale</div>
+            <div class="ex-name">Scaletta — In & Out Laterale</div>
             <div class="ex-sub">Coordinazione avanzata · Frequenza</div>
           </div>
         </div>
         <div class="ex-tags">
-          <span class="tag">Scala agilità</span>
+          <span class="tag">Scaletta</span>
+          <span class="tag">Variante: fune/corda</span>
           <span class="tag">Coordinazione</span>
         </div>
         <div class="ex-dose">
@@ -978,7 +1331,10 @@
         </div>
         <div class="ex-body">
           <div class="ex-desc">
-            Avanza di lato lungo la scala: apri i piedi fuori dai bordi del riquadro e richiudili dentro alternativamente. Schema: <strong>fuori-fuori → dentro-dentro → avanza</strong>. Ritmo continuo senza pause.
+            Avanza di lato lungo la scaletta: apri i piedi fuori dai bordi del riquadro e richiudili dentro alternativamente. Schema: <strong>fuori-fuori → dentro-dentro → avanza</strong>. Ritmo continuo senza pause.
+          </div>
+          <div class="ex-essential-note" style="background: rgba(255,193,7,0.08); border-color: rgba(255,193,7,0.3); border-left-color: #ffc107;">
+            💡 <strong>Variante senza scaletta:</strong> usa una fune/corda stesa a terra come riferimento lineare, mantenendo lo stesso schema di appoggi.
           </div>
           <div>
             <div class="tips-title">Cues tecnici</div>
@@ -993,7 +1349,7 @@
       </div>
 
       <!-- 6 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-carioca" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🔀</div>
           <div>
@@ -1027,7 +1383,7 @@
       </div>
 
       <!-- 7 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-box-drill" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">📦</div>
           <div>
@@ -1061,7 +1417,7 @@
       </div>
 
       <!-- 8 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-shuttle-10" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🎯</div>
           <div>
@@ -1095,7 +1451,7 @@
       </div>
 
       <!-- 9 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-skip-sprint" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">⚡</div>
           <div>
@@ -1129,7 +1485,7 @@
       </div>
 
       <!-- 10 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-fartlek" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🌄</div>
           <div>
@@ -1164,7 +1520,7 @@
       </div>
 
       <!-- 11 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-circuito" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🔁</div>
           <div>
@@ -1198,7 +1554,7 @@
       </div>
 
       <!-- 12 -->
-      <div class="ex-card med" onclick="toggle(this)">
+      <div class="ex-card med" id="ex-navetta-20" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🚶‍♂️</div>
           <div>
@@ -1239,48 +1595,14 @@
   <div class="intensity-block" id="block-high">
     <div class="intensity-header" onclick="toggleBlock('block-high')">
       <div class="intensity-pill pill-high">🔴 Alta intensità</div>
-      <div class="intensity-desc">Massimo sforzo — solo a inizio sessione, riposata, max 2–3 esercizi per allenamento</div>
+      <div class="intensity-desc">Massimo sforzo — solo a inizio sessione, riposato, max 2–3 esercizi per allenamento</div>
       <span class="intensity-chevron">▼</span>
     </div>
     <div class="ex-grid-wrap">
     <div class="ex-grid">
 
-      <!-- 10 -->
-      <div class="ex-card high" onclick="toggle(this)">
-        <div class="ex-top">
-          <div class="ex-icon">🚦</div>
-          <div>
-            <div class="ex-name">Reattività su Segnale Visivo</div>
-            <div class="ex-sub">Tempo di reazione · Sprint esplosivo</div>
-          </div>
-        </div>
-        <div class="ex-tags">
-          <span class="tag">Con partner</span>
-          <span class="tag">15–20 m</span>
-        </div>
-        <div class="ex-dose">
-          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
-          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">6–8</span></div>
-          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">60s</span></div>
-        </div>
-        <div class="ex-body">
-          <div class="ex-desc">
-            In posizione di pronto (peso sull'avampiede, leggero dondolìo). Il partner indica una direzione con la mano o alza un braccio — <strong>reagisci con sprint immediato di 15 m</strong> nella direzione segnalata. Variante: sprint su fischio.
-          </div>
-          <div>
-            <div class="tips-title">Cues tecnici</div>
-            <ul class="tips">
-              <li>Posizione di partenza attiva: non stare ferma e rigida — dondola leggermente.</li>
-              <li>Non anticipare il segnale: aspetta davvero lo stimolo.</li>
-              <li>Primo passo: piede che spinge il terreno, non si solleva passivamente.</li>
-            </ul>
-          </div>
-        </div>
-        <div class="ex-chevron"><span>▾</span> dettagli</div>
-      </div>
-
       <!-- 11 -->
-      <div class="ex-card high" onclick="toggle(this)">
+      <div class="ex-card high" id="ex-shuttle-545" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🔁</div>
           <div>
@@ -1314,7 +1636,7 @@
       </div>
 
       <!-- 12 -->
-      <div class="ex-card high" onclick="toggle(this)">
+      <div class="ex-card high" id="ex-t-drill" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">⊤</div>
           <div>
@@ -1348,7 +1670,7 @@
       </div>
 
       <!-- 13 -->
-      <div class="ex-card high" onclick="toggle(this)">
+      <div class="ex-card high" id="ex-sprint-30" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">💨</div>
           <div>
@@ -1382,7 +1704,7 @@
       </div>
 
       <!-- 14 -->
-      <div class="ex-card high" onclick="toggle(this)">
+      <div class="ex-card high" id="ex-slalom" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🔶</div>
           <div>
@@ -1416,7 +1738,7 @@
       </div>
 
       <!-- 15 -->
-      <div class="ex-card high" onclick="toggle(this)">
+      <div class="ex-card high key" id="ex-sprint-salita" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">⛰️</div>
           <div>
@@ -1452,7 +1774,7 @@
       </div>
 
       <!-- 16 -->
-      <div class="ex-card high" onclick="toggle(this)">
+      <div class="ex-card high key" id="ex-sprint-piano" onclick="toggle(this)">
         <div class="ex-top">
           <div class="ex-icon">🏃‍♂️</div>
           <div>
@@ -1494,6 +1816,7 @@
   <!-- ══ SESSIONI ESEMPIO ══ -->
   <div class="sessions-section">
     <div class="sessions-title">📋 Esempi di sessione</div>
+    <div class="sessions-hint">💡 Tocca un esercizio all'interno di una sessione per saltare direttamente alla sua spiegazione</div>
     <div class="sessions-grid">
 
       <!-- Sessione A -->
@@ -1505,23 +1828,23 @@
           <div class="session-chevron"><span>▾</span> mostra sessione</div>
         </div>
         <div class="session-body">
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-skip-alto" onclick="goToExercise('ex-skip-alto', event)">
             <div class="step-num">01</div>
             <div class="step-content">
-              <div class="step-name">A-Skip · Skipping Basso</div>
+              <div class="step-name">Skip Alto · Skipping Basso</div>
               <div class="step-detail">3 × 20 m · recupero 30s tra i due esercizi</div>
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-scaletta-due-passi" onclick="goToExercise('ex-scaletta-due-passi', event)">
             <div class="step-num">02</div>
             <div class="step-content">
-              <div class="step-name">Ladder — Due Passi Avanti</div>
+              <div class="step-name">Scaletta — Due Passi Avanti</div>
               <div class="step-detail">4 serie × 3 rip. · recupero 30s</div>
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-carioca" onclick="goToExercise('ex-carioca', event)">
             <div class="step-num">03</div>
             <div class="step-content">
               <div class="step-name">Carioca</div>
@@ -1529,7 +1852,7 @@
             </div>
             <span class="step-pill sp-med">Media</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-shuttle-10" onclick="goToExercise('ex-shuttle-10', event)">
             <div class="step-num">04</div>
             <div class="step-content">
               <div class="step-name">Shuttle Run — Navetta 10 m</div>
@@ -1552,7 +1875,7 @@
           <div class="session-chevron"><span>▾</span> mostra sessione</div>
         </div>
         <div class="session-body">
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-shuffle-laterale" onclick="goToExercise('ex-shuffle-laterale', event)">
             <div class="step-num">01</div>
             <div class="step-content">
               <div class="step-name">Shuffle Laterale</div>
@@ -1560,7 +1883,7 @@
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-skip-sprint" onclick="goToExercise('ex-skip-sprint', event)">
             <div class="step-num">02</div>
             <div class="step-content">
               <div class="step-name">Skipping Rapido + Sprint 15+20 m</div>
@@ -1568,16 +1891,8 @@
             </div>
             <span class="step-pill sp-med">Media</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-sprint-30" onclick="goToExercise('ex-sprint-30', event)">
             <div class="step-num">03</div>
-            <div class="step-content">
-              <div class="step-name">Reattività su Segnale Visivo</div>
-              <div class="step-detail">3 serie × 6 rip. · recupero 60s</div>
-            </div>
-            <span class="step-pill sp-high">Alta</span>
-          </div>
-          <div class="session-step">
-            <div class="step-num">04</div>
             <div class="step-content">
               <div class="step-name">Sprint Massimale 30 m</div>
               <div class="step-detail">3 serie × 4 rip. · recupero 2 min</div>
@@ -1607,7 +1922,7 @@
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-sprint-salita" onclick="goToExercise('ex-sprint-salita', event)">
             <div class="step-num">02</div>
             <div class="step-content">
               <div class="step-name">Sprint in Salita</div>
@@ -1623,7 +1938,7 @@
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-sprint-piano" onclick="goToExercise('ex-sprint-piano', event)">
             <div class="step-num">04</div>
             <div class="step-content">
               <div class="step-name">Sprint in Piano 10–15"</div>
@@ -1657,7 +1972,7 @@
           <div class="session-chevron"><span>▾</span> mostra sessione</div>
         </div>
         <div class="session-body">
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-mobilita" onclick="goToExercise('ex-mobilita', event)">
             <div class="step-num">01</div>
             <div class="step-content">
               <div class="step-name">Mobilità Dinamica</div>
@@ -1665,32 +1980,24 @@
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
+          <div class="session-step" data-ref="ex-skip-lenti" onclick="goToExercise('ex-skip-lenti', event)">
             <div class="step-num">02</div>
-            <div class="step-content">
-              <div class="step-name">Corsa Tecnica Plantare</div>
-              <div class="step-detail">4–6 × 100 m su erba · camminata 1' tra reps</div>
-            </div>
-            <span class="step-pill sp-low">Bassa</span>
-          </div>
-          <div class="session-step">
-            <div class="step-num">03</div>
             <div class="step-content">
               <div class="step-name">Skip Lenti (A-skip + C-skip)</div>
               <div class="step-detail">3 × 30 m · recupero 45" — meccanica controllata</div>
             </div>
             <span class="step-pill sp-low">Bassa</span>
           </div>
-          <div class="session-step">
-            <div class="step-num">04</div>
+          <div class="session-step" data-ref="ex-navetta-20" onclick="goToExercise('ex-navetta-20', event)">
+            <div class="step-num">03</div>
             <div class="step-content">
               <div class="step-name">Navetta 20 m — Camminata + Skip</div>
               <div class="step-detail">4 serie · recupero 45" — ritmo progressivo, mai massimale</div>
             </div>
             <span class="step-pill sp-med">Media</span>
           </div>
-          <div class="session-step">
-            <div class="step-num">05</div>
+          <div class="session-step" data-ref="ex-circuito" onclick="goToExercise('ex-circuito', event)">
+            <div class="step-num">04</div>
             <div class="step-content">
               <div class="step-name">Circuito Corpo Libero</div>
               <div class="step-detail">3 giri: 10 squat jump + 20 mountain climbers + 30" plank laterale/gamba · rec. 1'</div>
@@ -1704,7 +2011,7 @@
             <strong>🔧 Struttura consigliata:</strong> 10' riscaldamento (mobilità = già fatto nello step 01) → sessione → 5' stretching statico finale. Usa il telefono solo come timer.
           </div>
           <div class="session-note">
-            <strong>🔄 Variante Fartlek:</strong> sostituisci step 04 e 05 con <strong>20–25' di Fartlek naturale</strong> (2' medio + 1' veloce) se hai disponibile un percorso collinare o misto.
+            <strong>🔄 Variante Fartlek:</strong> sostituisci step 03 e 04 con <strong>20–25' di Fartlek naturale</strong> (2' medio + 1' veloce) se hai disponibile un percorso collinare o misto.
           </div>
         </div>
       </div>
@@ -1712,6 +2019,39 @@
     </div>
   </div>
 
+    </div><!-- /category-body Corsa -->
+  </div><!-- /category Corsa -->
+
+  <!-- ══════════════════════════════════════════
+       CATEGORIA: PALESTRA
+       ══════════════════════════════════════════ -->
+  <div class="category" id="cat-palestra">
+    <div class="category-header" onclick="toggleCategory('cat-palestra')">
+      <div class="category-icon">🏋️‍♂️</div>
+      <div class="category-info">
+        <div class="category-label">Categoria</div>
+        <div class="category-name">Palestra</div>
+        <div class="category-desc">Esercizi di forza, potenza e stabilità — in arrivo</div>
+      </div>
+      <div class="category-chevron">▾</div>
+    </div>
+    <div class="category-body">
+      <div class="category-empty">
+        <span class="category-empty-icon">🔧</span>
+        <div class="category-empty-title">Sezione in costruzione</div>
+        <div class="category-empty-desc">
+          Qui arriveranno gli esercizi di <strong>forza, potenza esplosiva e core stability</strong> complementari al lavoro di rapidità.
+        </div>
+        <div class="working-signature">
+          <span class="gear">⚙️</span>
+          <span><strong>Alessandro</strong> sta lavorando per te</span>
+        </div>
+        <div class="working-sub">
+          Programma tagliato su misura — contenuti aggiunti progressivamente.
+        </div>
+      </div>
+    </div>
+  </div>
 
 </main>
 
@@ -1767,6 +2107,51 @@
     const isOpen = card.classList.contains('open');
     card.classList.toggle('open');
     animatePanel(body, !isOpen);
+  }
+
+  function toggleCategory(id) {
+    const cat = document.getElementById(id);
+    const body = cat.querySelector('.category-body');
+    const isOpen = cat.classList.contains('open');
+    cat.classList.toggle('open');
+    animatePanel(body, !isOpen);
+  }
+
+  function toggleHowTo() {
+    const sec = document.getElementById('how-to-section');
+    const body = sec.querySelector('.how-to-body');
+    const isOpen = sec.classList.contains('open');
+    sec.classList.toggle('open');
+    animatePanel(body, !isOpen);
+  }
+
+  function goToExercise(ref, event) {
+    if (event) event.stopPropagation();
+    const target = document.getElementById(ref);
+    if (!target) return;
+
+    const category = target.closest('.category');
+    const needsCategoryOpen = category && !category.classList.contains('open');
+    const block = target.closest('.intensity-block');
+    const needsBlockOpen = block && !block.classList.contains('open');
+    const needsCardOpen = !target.classList.contains('open');
+
+    if (needsCategoryOpen) toggleCategory(category.id);
+    if (needsBlockOpen) {
+      // If category was closed, give it time to expand first
+      setTimeout(() => toggleBlock(block.id), needsCategoryOpen ? 360 : 0);
+    }
+
+    const delay = (needsCategoryOpen ? 360 : 0) + (needsBlockOpen ? 360 : 0);
+    setTimeout(() => {
+      if (needsCardOpen) toggle(target);
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      target.classList.remove('highlight-pulse');
+      // reflow to restart animation
+      void target.offsetWidth;
+      target.classList.add('highlight-pulse');
+      setTimeout(() => target.classList.remove('highlight-pulse'), 2500);
+    }, delay);
   }
 </script>
 </body>
