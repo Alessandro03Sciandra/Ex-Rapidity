@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="login-locked">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -1001,9 +1001,157 @@
       .category-name { font-size: 1rem; }
       .category-label { font-size: 0.58rem; letter-spacing: 0.12em; }
     }
+
+    /* ── LOGIN GATE ── */
+    html.login-locked,
+    html.login-locked body {
+      overflow: hidden;
+      height: 100%;
+    }
+    html.login-locked .site-content { display: none !important; }
+    .login-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      background: radial-gradient(ellipse at top, #0f2030 0%, #050b13 70%, #000 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+    .login-gate.hidden {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+      background: linear-gradient(135deg, #111c2a 0%, #0a141e 100%);
+      border: 1px solid rgba(255,109,0,0.3);
+      border-radius: 18px;
+      padding: 2rem 1.75rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.02) inset;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .login-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #ff6d00 0%, #ffab70 50%, #ff6d00 100%);
+      background-size: 200% 100%;
+      animation: login-sweep 4s linear infinite;
+    }
+    @keyframes login-sweep {
+      0% { background-position: 0% 0%; }
+      100% { background-position: 200% 0%; }
+    }
+    .login-lock {
+      font-size: 2.2rem;
+      margin-bottom: 0.8rem;
+    }
+    .login-title {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 0.35rem;
+      letter-spacing: 0.01em;
+    }
+    .login-sub {
+      font-size: 0.82rem;
+      color: #7a9ab5;
+      margin: 0 0 1.5rem;
+      line-height: 1.45;
+    }
+    .login-sub strong { color: #ff6d00; font-weight: 700; }
+    .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+    .login-input {
+      width: 100%;
+      padding: 0.85rem 1rem;
+      background: rgba(255,255,255,0.04);
+      border: 1.5px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      color: #fff;
+      font-size: 0.95rem;
+      font-family: inherit;
+      text-align: center;
+      letter-spacing: 0.05em;
+      transition: border-color 0.2s, background 0.2s;
+      box-sizing: border-box;
+    }
+    .login-input:focus {
+      outline: none;
+      border-color: #ff6d00;
+      background: rgba(255,109,0,0.06);
+    }
+    .login-input::placeholder { color: #4a6478; }
+    .login-btn {
+      padding: 0.9rem 1rem;
+      background: linear-gradient(135deg, #ff6d00 0%, #ff8a3d 100%);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .login-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(255,109,0,0.4);
+    }
+    .login-btn:active { transform: translateY(0); }
+    .login-error {
+      font-size: 0.78rem;
+      color: #ff5252;
+      margin-top: 0.6rem;
+      min-height: 1rem;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .login-error.show { opacity: 1; }
+    .login-foot {
+      margin-top: 1.3rem;
+      font-size: 0.7rem;
+      color: #4a6478;
+      letter-spacing: 0.05em;
+    }
+    .login-shake { animation: login-shake 0.4s ease; }
+    @keyframes login-shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-8px); }
+      75% { transform: translateX(8px); }
+    }
   </style>
 </head>
 <body>
+
+<!-- LOGIN GATE -->
+<div class="login-gate" id="loginGate">
+  <div class="login-card">
+    <div class="login-lock">🔒</div>
+    <div class="login-title">Scheda privata</div>
+    <div class="login-sub">Scheda di rapidità per <strong>Simone Galiotti</strong><br>Inserisci la password per accedere</div>
+    <form class="login-form" onsubmit="return doLogin(event)">
+      <input type="password" id="loginInput" class="login-input" placeholder="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required />
+      <button type="submit" class="login-btn">Accedi →</button>
+      <div class="login-error" id="loginError">Password errata</div>
+    </form>
+    <div class="login-foot">PROGRAMMA A CURA DI A. SCIANDRA</div>
+  </div>
+</div>
+
+<div class="site-content">
 
 <!-- HEADER -->
 <header>
@@ -1062,7 +1210,7 @@
   <!-- ══════════════════════════════════════════
        CATEGORIA: CORSA
        ══════════════════════════════════════════ -->
-  <div class="category open" id="cat-corsa">
+  <div class="category" id="cat-corsa">
     <div class="category-header" onclick="toggleCategory('cat-corsa')">
       <div class="category-icon">🏃‍♂️</div>
       <div class="category-info">
@@ -2153,6 +2301,51 @@
       setTimeout(() => target.classList.remove('highlight-pulse'), 2500);
     }, delay);
   }
+
+  /* ── LOGIN GATE ── */
+  // SHA-256 della password. Per cambiarla: in console del browser esegui
+  //   crypto.subtle.digest('SHA-256', new TextEncoder().encode('NUOVA_PASSWORD'))
+  //     .then(b => console.log(Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('')))
+  const LOGIN_HASH = '624121e9cb8c9d3a2861cabfcf9494f7763059d3207a4d44f2f51a65a2f6cf0e';
+
+  // Blocca subito la pagina (lo stile è gestito da html.login-locked)
+  document.documentElement.classList.add('login-locked');
+
+  async function sha256Hex(str) {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+  }
+
+  async function doLogin(ev) {
+    ev.preventDefault();
+    const input = document.getElementById('loginInput');
+    const error = document.getElementById('loginError');
+    const card = document.querySelector('.login-card');
+    const value = input.value.trim();
+    const hash = await sha256Hex(value);
+    if (hash === LOGIN_HASH) {
+      const gate = document.getElementById('loginGate');
+      gate.classList.add('hidden');
+      document.documentElement.classList.remove('login-locked');
+      setTimeout(() => gate.remove(), 500);
+    } else {
+      error.classList.add('show');
+      card.classList.remove('login-shake');
+      void card.offsetWidth;
+      card.classList.add('login-shake');
+      input.value = '';
+      input.focus();
+    }
+    return false;
+  }
+
+  // Focus automatico al campo password (il DOM è già pronto qui)
+  (function focusLogin() {
+    const input = document.getElementById('loginInput');
+    if (input) input.focus();
+  })();
 </script>
+
+</div><!-- /.site-content -->
 </body>
 </html>
