@@ -460,10 +460,17 @@
       .how-to { gap: 0.75rem; padding: 1rem; }
       .how-item { min-width: 100%; }
       main { padding: 1.25rem 0.85rem 2.5rem; }
-      header { padding: 1.5rem 1rem 1.25rem; }
-      header h1 { font-size: 1.65rem; }
-      .header-brand { position: static; display: flex; justify-content: center; margin-bottom: 0.75rem; }
-      .athlete-tag { font-size: 0.75rem; }
+      header { padding: 1.75rem 1rem 1.5rem; }
+      header h1 { font-size: 1.65rem; margin-top: 0.25rem; }
+      header p { margin-top: 0.6rem; }
+      .header-brand {
+        position: relative;
+        top: auto; left: auto;
+        width: 88px;
+        height: 88px;
+        margin: 0 auto 1.25rem;
+      }
+      .athlete-tag { font-size: 0.75rem; margin-top: 0.25rem; margin-bottom: 0.85rem; }
       .intensity-desc { display: none; }
       .intensity-header { gap: 0.6rem; padding: 0.65rem 0.75rem; }
       .ex-dose { flex-wrap: wrap; gap: 0.5rem; }
@@ -471,7 +478,7 @@
       .footer-inner { flex-direction: column; align-items: center; text-align: center; }
       .footer-text { text-align: center; }
 
-      .header-tip { font-size: 0.7rem; padding: 0.3rem 0.75rem; }
+      .header-tip { font-size: 0.7rem; padding: 0.3rem 0.75rem; margin-top: 1.1rem; }
     }
     @media (max-width: 360px) {
       header h1 { font-size: 1.4rem; }
@@ -833,6 +840,110 @@
         <div class="ex-chevron"><span>▾</span> dettagli</div>
       </div>
 
+      <!-- 5 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🌱</div>
+          <div>
+            <div class="ex-name">Corsa Tecnica Plantare</div>
+            <div class="ex-sub">Tecnica di corsa · Appoggio medio-piede</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Su erba</span>
+          <span class="tag">Recupero attivo</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4–6</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">100 m</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">1' camminata</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Corsa a ritmo blando su erba concentrandoti sull'<strong>appoggio medio-piede</strong> (non tallone, non solo punta). Braccia rilassate, respiro calmo. L'obiettivo è la pulizia tecnica, non la velocità.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Immagina di "accarezzare" il terreno — atterraggio silenzioso.</li>
+              <li>Spalle rilassate, mascella molle, mani morbide.</li>
+              <li>Frequenza costante, nessuna accelerazione.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 6 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🐌</div>
+          <div>
+            <div class="ex-name">Skip Lenti (A-skip + C-skip)</div>
+            <div class="ex-sub">Meccanica · Controllo motorio</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Tecnica</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">30 m</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">45"</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Alterna <strong>A-skip basso</strong> (ginocchio alto, controllato) e <strong>C-skip</strong> (calciata posteriore con tallone al gluteo). Esagera la meccanica andando lento — l'obiettivo è sentire ogni fase del movimento, non la velocità.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>A-skip: dorsiflessione del piede prima dell'appoggio.</li>
+              <li>C-skip: tallone che sfiora il gluteo, ginocchio verso il basso.</li>
+              <li>Nessuna fretta — meglio 1 ripetizione pulita che 5 sporche.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 7 -->
+      <div class="ex-card low" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🧘</div>
+          <div>
+            <div class="ex-name">Mobilità Dinamica</div>
+            <div class="ex-sub">Postura · Fluidità articolare</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Warm-up</span>
+          <span class="tag">Recupero attivo</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Blocchi</span><span class="dose-val">2</span></div>
+          <div class="dose-item"><span class="dose-label">Durata</span><span class="dose-val">10' continui</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">—</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Sequenza fluida di <strong>cerchi con le braccia</strong> (avanti/dietro), <strong>cerchi con le gambe</strong> (anca, ginocchio), <strong>torsioni del busto</strong> e affondi in camminata. Flusso continuo, senza pause. Ottimo sia come warm-up sia come scarico.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Respiro nasale, profondo e ritmato.</li>
+              <li>Movimenti ampi ma controllati — non rigidi né molli.</li>
+              <li>Se senti tensione in una zona, resta lì un ciclo in più.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
     </div>
     </div><!-- /ex-grid-wrap -->
   </div>
@@ -1011,6 +1122,109 @@
               <li>Durante lo skipping: braccia veloci, respiro ritmico.</li>
               <li>Alla transizione: primo passo lungo e basso, busto inclinato in avanti.</li>
               <li>Non saltare in su nella transizione — spingi orizzontalmente.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 10 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🌄</div>
+          <div>
+            <div class="ex-name">Fartlek Naturale</div>
+            <div class="ex-sub">Resistenza aerobica · Gioco di ritmo</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Outdoor</span>
+          <span class="tag">A sensazione</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Durata</span><span class="dose-val">20–25'</span></div>
+          <div class="dose-item"><span class="dose-label">Schema</span><span class="dose-val">2' medio + 1' veloce</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">incluso</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Corri in continuo alternando <strong>2' a ritmo medio</strong> e <strong>1' a ritmo veloce</strong>, preferibilmente su percorsi collinari o naturali. <strong>No cronometro</strong>: vai a sensazione — il corpo deve guidare, non l'orologio.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Nel tratto "veloce" devi poter ancora respirare dal naso parzialmente.</li>
+              <li>Usa salite per i tratti veloci, discese per recuperare attivo.</li>
+              <li>Chiudi sempre con 3–5' di corsa lenta per scaricare.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 11 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🔁</div>
+          <div>
+            <div class="ex-name">Circuito Corpo Libero</div>
+            <div class="ex-sub">Forza resistente · Core</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Full-body</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Giri</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Stazioni</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">1' tra giri</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Un giro = <strong>10 squat jump lenti</strong> (controllo in atterraggio) + <strong>20 mountain climbers</strong> (10 per gamba) + <strong>30" plank laterale per lato</strong>. Senza pausa tra stazioni, recupera 1' alla fine di ogni giro.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Squat jump: atterraggio morbido, ginocchia allineate ai piedi.</li>
+              <li>Mountain climbers: bacino basso, addome attivo, respiro continuo.</li>
+              <li>Plank laterale: corpo in linea retta, fianco mai cadente.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 12 -->
+      <div class="ex-card med" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🚶‍♂️</div>
+          <div>
+            <div class="ex-name">Navetta 20 m — Camminata + Skip</div>
+            <div class="ex-sub">Resistenza aerobica · Ritmo progressivo</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Progressivo</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">4</span></div>
+          <div class="dose-item"><span class="dose-label">Distanza</span><span class="dose-val">20 m A/R</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">45"</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Percorri 20 m a <strong>camminata veloce</strong>, poi torna indietro in <strong>skip basso</strong>. Ogni serie aumenta leggermente il ritmo — la prima è rodaggio, l'ultima è la più tonica ma <strong>mai massimale</strong>.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Camminata: passo lungo, braccia attive come nella marcia sportiva.</li>
+              <li>Skip: frequenza prima dell'ampiezza, appoggio avampiede.</li>
+              <li>Se perdi la tecnica, rallenta — la qualità viene prima della velocità.</li>
             </ul>
           </div>
         </div>
@@ -1201,6 +1415,78 @@
         <div class="ex-chevron"><span>▾</span> dettagli</div>
       </div>
 
+      <!-- 15 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">⛰️</div>
+          <div>
+            <div class="ex-name">Sprint in Salita</div>
+            <div class="ex-sub">Potenza neuromuscolare · Tecnica esplosiva</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Salita 6–12%</span>
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">Run-integrated</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Serie</span><span class="dose-val">3</span></div>
+          <div class="dose-item"><span class="dose-label">Durata</span><span class="dose-val">10–15"</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">1'–1'30" camminando giù</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Sprint massimale in salita su pendenza moderata (6–12%). La salita <strong>amplifica la spinta del piede e riduce l'impatto</strong>, rendendolo un esercizio molto efficace per la potenza neuromuscolare con meno rischio di infortuni rispetto allo sprint in piano. Da fare <strong>a freddo relativo</strong> (dopo 3–4 km di corsa media) per sfruttare la freschezza nervosa.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Busto leggermente inclinato avanti (segui la pendenza, non combatterla).</li>
+              <li>Braccia molto attive — sono loro a dettare la frequenza in salita.</li>
+              <li>Punta tutto sulla <strong>spinta</strong> del piede, non sull'allungo del passo.</li>
+              <li>Recupero camminato giù per tutto il tempo — niente corsetta.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
+      <!-- 16 -->
+      <div class="ex-card high" onclick="toggle(this)">
+        <div class="ex-top">
+          <div class="ex-icon">🏃‍♂️</div>
+          <div>
+            <div class="ex-name">Sprint in Piano (10–15")</div>
+            <div class="ex-sub">Velocità lineare · Trasferimento di potenza</div>
+          </div>
+        </div>
+        <div class="ex-tags">
+          <span class="tag">Senza attrezzi</span>
+          <span class="tag">50–90 m</span>
+          <span class="tag">Run-integrated</span>
+        </div>
+        <div class="ex-dose">
+          <div class="dose-item"><span class="dose-label">Ripetizioni</span><span class="dose-val">3–4</span></div>
+          <div class="dose-item"><span class="dose-label">Durata</span><span class="dose-val">10–15"</span></div>
+          <div class="dose-item"><span class="dose-label">Recupero</span><span class="dose-val">45"–60"</span></div>
+        </div>
+        <div class="ex-body">
+          <div class="ex-desc">
+            Sprint massimale in piano, ideale da eseguire <strong>dopo gli sprint in salita</strong> per trasferire la potenza neuromuscolare appena allenata in velocità pura. Parti da corsetta (non da fermo) perché è integrato in un run di endurance. L'obiettivo è portare la stessa <strong>meccanica forte</strong> della salita sul piano.
+          </div>
+          <div>
+            <div class="tips-title">Cues tecnici</div>
+            <ul class="tips">
+              <li>Parti in progressione da corsetta — non fermarti prima.</li>
+              <li>Primi 3–5" accelerazione, poi "cruise" a velocità massima.</li>
+              <li>Decelerazione graduale su 20–30 m, mai brusca.</li>
+              <li>Se senti calare la qualità, stoppa prima: meglio 3 buoni che 4 stanchi.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ex-chevron"><span>▾</span> dettagli</div>
+      </div>
+
     </div>
     </div><!-- /ex-grid-wrap -->
   </div>
@@ -1300,6 +1586,125 @@
           </div>
           <div class="session-note">
             <strong>⚠️ Quando usarla:</strong> una volta a settimana al massimo, a inizio sessione dopo riscaldamento completo. Non usarla il giorno prima di una partita.
+          </div>
+        </div>
+      </div>
+
+      <!-- Sessione C -->
+      <div class="session-card" onclick="toggleSession(this)">
+        <div class="session-header">
+          <div class="session-type">Sessione C</div>
+          <div class="session-name">Run Endurance + Sprint</div>
+          <div class="session-meta">⏱ ~60–70 min &nbsp;·&nbsp; 1×/settimana · lontano dalla partita</div>
+          <div class="session-chevron"><span>▾</span> mostra sessione</div>
+        </div>
+        <div class="session-body">
+          <div class="session-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-name">Corsa media — Warm-up lungo</div>
+              <div class="step-detail">3–4 km iniziali a ritmo medio, progressivo</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-name">Sprint in Salita</div>
+              <div class="step-detail">3 rip. × 10–15" · recupero 1'–1'30" camminando giù</div>
+            </div>
+            <span class="step-pill sp-high">Alta</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-name">Corsa media — Transizione</div>
+              <div class="step-detail">2–3 km a ritmo medio per trasferire la potenza</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-name">Sprint in Piano 10–15"</div>
+              <div class="step-detail">3–4 rip. × 10–15" · recupero 45"–60"</div>
+            </div>
+            <span class="step-pill sp-high">Alta</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">05</div>
+            <div class="step-content">
+              <div class="step-name">Defaticamento</div>
+              <div class="step-detail">km rimanenti fino a 12 km totali · corsa lenta + mobilità</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-note">
+            <strong>💡 Logica della sequenza:</strong> prima la salita — sfrutti la freschezza per massimizzare potenza neuromuscolare e tecnica esplosiva. Poi il piano — trasferisci quel "potere" in velocità lineare, chiudendo con qualità prima del defaticamento.
+          </div>
+          <div class="session-note">
+            <strong>⚠️ Quando usarla:</strong> 1 volta a settimana, <strong>non</strong> consecutiva a una partita. Perfetta in settimana piena, lontana da impegni agonistici. Se senti fatica accumulata, salta gli sprint e tieni solo la corsa.
+          </div>
+        </div>
+      </div>
+
+      <!-- Sessione D -->
+      <div class="session-card" onclick="toggleSession(this)">
+        <div class="session-header">
+          <div class="session-type">Sessione D</div>
+          <div class="session-name">Scarico & Tecnica</div>
+          <div class="session-meta">⏱ ~25–30 min &nbsp;·&nbsp; 2–3×/settimana · recupero attivo</div>
+          <div class="session-chevron"><span>▾</span> mostra sessione</div>
+        </div>
+        <div class="session-body">
+          <div class="session-step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-name">Mobilità Dinamica</div>
+              <div class="step-detail">10' continui — cerchi braccia/gambe, torsioni, affondi in camminata</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-name">Corsa Tecnica Plantare</div>
+              <div class="step-detail">4–6 × 100 m su erba · camminata 1' tra reps</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-name">Skip Lenti (A-skip + C-skip)</div>
+              <div class="step-detail">3 × 30 m · recupero 45" — meccanica controllata</div>
+            </div>
+            <span class="step-pill sp-low">Bassa</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-name">Navetta 20 m — Camminata + Skip</div>
+              <div class="step-detail">4 serie · recupero 45" — ritmo progressivo, mai massimale</div>
+            </div>
+            <span class="step-pill sp-med">Media</span>
+          </div>
+          <div class="session-step">
+            <div class="step-num">05</div>
+            <div class="step-content">
+              <div class="step-name">Circuito Corpo Libero</div>
+              <div class="step-detail">3 giri: 10 squat jump + 20 mountain climbers + 30" plank laterale/gamba · rec. 1'</div>
+            </div>
+            <span class="step-pill sp-med">Media</span>
+          </div>
+          <div class="session-note">
+            <strong>💡 Quando usarla:</strong> giorni di scarico, dopo un'intensa o come seconda seduta settimanale in autonomia. Mantieni volume e tecnica senza stressare il sistema nervoso.
+          </div>
+          <div class="session-note">
+            <strong>🔧 Struttura consigliata:</strong> 10' riscaldamento (mobilità = già fatto nello step 01) → sessione → 5' stretching statico finale. Usa il telefono solo come timer.
+          </div>
+          <div class="session-note">
+            <strong>🔄 Variante Fartlek:</strong> sostituisci step 04 e 05 con <strong>20–25' di Fartlek naturale</strong> (2' medio + 1' veloce) se hai disponibile un percorso collinare o misto.
           </div>
         </div>
       </div>
