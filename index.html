@@ -13,8 +13,9 @@
       --surface: #141a15;
       --surface2: #1c241e;
       --border: #2a3830;
-      --text: #edf5e8;
-      --text-muted: #8a9a88;
+      --text: #e8efe6;
+      --text-muted: #a3b3a1;
+      --text-soft: #c9d4c7;
       --low:    #4ade80;
       --med:    #facc15;
       --high:   #f87171;
@@ -26,11 +27,15 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
-      line-height: 1.6;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      font-feature-settings: "kern" 1, "liga" 1;
     }
 
     /* ── HEADER ── */
@@ -49,12 +54,12 @@
       pointer-events: none;
     }
     .header-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.15em;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--orange);
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.55rem;
       position: relative;
     }
     header h1 {
@@ -66,9 +71,10 @@
     }
     header h1 em { color: var(--orange); font-style: normal; }
     header p {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      margin-top: 0.5rem;
+      color: var(--text-soft);
+      font-size: 0.95rem;
+      margin-top: 0.55rem;
+      line-height: 1.5;
       position: relative;
     }
     .header-tip {
@@ -79,9 +85,10 @@
       background: rgba(0,230,118,0.1);
       border: 1px solid rgba(0,230,118,0.25);
       border-radius: 999px;
-      padding: 0.35rem 1rem;
-      font-size: 0.75rem;
+      padding: 0.4rem 1.1rem;
+      font-size: 0.82rem;
       color: var(--orange-light);
+      line-height: 1.4;
       position: relative;
     }
 
@@ -98,9 +105,9 @@
     .legend-item {
       display: flex;
       align-items: center;
-      gap: 0.4rem;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--text-soft);
     }
     .dot {
       width: 10px; height: 10px;
@@ -165,10 +172,10 @@
       background: rgba(0,230,118,0.08);
       border: 1px solid rgba(0,230,118,0.2);
       border-radius: 8px;
-      padding: 0.3rem 0.75rem;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-bottom: 0.6rem;
+      padding: 0.35rem 0.85rem;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      margin-bottom: 0.65rem;
       position: relative;
     }
     .athlete-tag strong { color: var(--text); font-weight: 700; }
@@ -228,10 +235,10 @@
       align-items: center;
       gap: 0.5rem;
       border-radius: 999px;
-      padding: 0.35rem 1rem;
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 0.08em;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       border: 1px solid;
       flex-shrink: 0;
@@ -240,9 +247,10 @@
     .pill-med  { color: var(--med);  border-color: var(--med);  background: var(--med-bg);  }
     .pill-high { color: var(--high); border-color: var(--high); background: var(--high-bg); }
     .intensity-desc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
+      font-size: 0.88rem;
+      color: var(--text-soft);
       flex: 1;
+      line-height: 1.55;
     }
     .intensity-line {
       flex: 1;
@@ -310,14 +318,14 @@
     }
     .ex-essential-note {
       margin: 0.75rem 0 0;
-      padding: 0.6rem 0.8rem;
+      padding: 0.7rem 0.9rem;
       background: rgba(0,230,118,0.1);
       border: 1px solid rgba(0,230,118,0.3);
       border-left: 3px solid var(--orange);
       border-radius: 6px;
-      font-size: 0.75rem;
+      font-size: 0.84rem;
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.6;
     }
     .ex-essential-note strong { color: var(--orange-light); }
     @media (max-width: 480px) {
@@ -396,14 +404,16 @@
       margin-top: 0.1rem;
     }
     .ex-name {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
-      line-height: 1.3;
+      line-height: 1.35;
+      color: var(--text);
     }
     .ex-sub {
-      font-size: 0.72rem;
+      font-size: 0.78rem;
       color: var(--text-muted);
-      margin-top: 0.2rem;
+      margin-top: 0.25rem;
+      line-height: 1.45;
     }
 
     .ex-tags {
@@ -413,14 +423,14 @@
       padding: 0 1.1rem 0.85rem;
     }
     .tag {
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 0.15rem 0.5rem;
+      padding: 0.2rem 0.55rem;
       border-radius: 4px;
       background: var(--surface2);
-      color: var(--text-muted);
+      color: var(--text-soft);
       border: 1px solid var(--border);
     }
 
@@ -433,8 +443,8 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-    .dose-item { font-size: 0.75rem; }
-    .dose-label { color: var(--text-muted); font-size: 0.65rem; display: block; }
+    .dose-item { font-size: 0.82rem; line-height: 1.45; }
+    .dose-label { color: var(--text-muted); font-size: 0.7rem; display: block; letter-spacing: 0.04em; }
     .dose-val { font-weight: 700; color: var(--text); }
 
     /* Accordion body */
@@ -460,18 +470,19 @@
     }
 
     .ex-desc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.7;
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.75;
     }
-    .ex-desc strong { color: var(--text); }
+    .ex-desc strong { color: var(--text); font-weight: 700; }
 
     .tips-title {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       color: var(--orange);
-      margin-bottom: 0.35rem;
+      margin-bottom: 0.45rem;
+      font-weight: 700;
     }
     .tips {
       list-style: none;
@@ -480,10 +491,11 @@
       gap: 0.3rem;
     }
     .tips li {
-      font-size: 0.78rem;
-      color: var(--text-muted);
+      font-size: 0.85rem;
+      color: var(--text-soft);
       padding-left: 1rem;
       position: relative;
+      line-height: 1.6;
     }
     .tips li::before {
       content: '›';
@@ -527,18 +539,18 @@
     .how-to-icon { font-size: 1.4rem; line-height: 1; flex-shrink: 0; }
     .how-to-info { flex: 1; min-width: 0; }
     .how-to-label {
-      font-size: 0.62rem;
-      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--orange);
-      font-weight: 800;
-      margin-bottom: 0.15rem;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
     }
     .how-to-title {
-      font-size: 1.02rem;
-      font-weight: 800;
+      font-size: 1.08rem;
+      font-weight: 700;
       color: var(--text);
-      line-height: 1.2;
+      line-height: 1.3;
     }
     .how-to-chevron {
       font-size: 1.05rem;
@@ -572,12 +584,12 @@
       line-height: 1;
     }
     .how-label {
-      font-size: 0.8rem;
+      font-size: 0.88rem;
       font-weight: 700;
       color: var(--text);
-      margin: 0.25rem 0 0.15rem;
+      margin: 0.3rem 0 0.2rem;
     }
-    .how-desc { font-size: 0.75rem; color: var(--text-muted); }
+    .how-desc { font-size: 0.82rem; color: var(--text-soft); line-height: 1.55; }
 
     /* ── HOW-TO v2 (istruzioni sintetiche) ── */
     .how-to.v2 {
@@ -614,11 +626,11 @@
     }
     .rule-content { flex: 1; min-width: 0; }
     .rule-text {
-      font-size: 0.85rem;
+      font-size: 0.92rem;
       color: var(--text);
-      line-height: 1.4;
+      line-height: 1.6;
     }
-    .rule-text strong { color: #fff; }
+    .rule-text strong { color: #fff; font-weight: 700; }
     .pill-inline {
       display: inline-block;
       padding: 0.1rem 0.45rem;
@@ -633,12 +645,12 @@
     .pill-inline.sp-high { background: rgba(255,70,70,0.18); color: #ff8a8a; border: 1px solid rgba(255,70,70,0.35); }
 
     @media (max-width: 600px) {
-      .how-to-header { padding: 0.85rem 1rem; }
-      .how-to-title { font-size: 0.92rem; }
+      .how-to-header { padding: 0.9rem 1rem; }
+      .how-to-title { font-size: 1rem; }
       .how-to { padding: 1rem 1.1rem; gap: 1.1rem; }
       .how-to.v2 { padding: 1rem 1.1rem; }
-      .how-rule { padding: 0.65rem 0.75rem; gap: 0.7rem; }
-      .rule-text { font-size: 0.8rem; }
+      .how-rule { padding: 0.75rem 0.8rem; gap: 0.75rem; }
+      .rule-text { font-size: 0.88rem; line-height: 1.6; }
     }
 
     /* ── FEEDBACK ── */
@@ -855,11 +867,12 @@
 
     /* ── FOOTER ── */
     footer {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      padding: 1.5rem 1.25rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      padding: 1.6rem 1.25rem;
       border-top: 1px solid var(--border);
       background: var(--surface);
+      line-height: 1.6;
     }
     .footer-inner {
       max-width: 980px;
@@ -881,10 +894,11 @@
       flex-shrink: 0;
     }
     .sig-label {
-      font-size: 0.65rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--text-muted);
+      letter-spacing: 0.09em;
+      color: var(--text-soft);
+      font-weight: 600;
     }
         .sig-logo-img {
       height: 40px;
@@ -920,19 +934,19 @@
         top: 0.6rem; right: 0.6rem;
         width: 64px; height: 64px;
       }
-      .athlete-tag { font-size: 0.75rem; margin-top: 0.25rem; margin-bottom: 0.85rem; }
+      .athlete-tag { font-size: 0.82rem; margin-top: 0.25rem; margin-bottom: 0.85rem; }
       .intensity-desc { display: none; }
-      .intensity-header { gap: 0.6rem; padding: 0.65rem 0.75rem; }
+      .intensity-header { gap: 0.6rem; padding: 0.7rem 0.8rem; }
       .ex-dose { flex-wrap: wrap; gap: 0.5rem; }
-      .legend { gap: 0.75rem; font-size: 0.7rem; flex-direction: column; align-items: flex-start; padding: 0.75rem 1rem; }
+      .legend { gap: 0.75rem; font-size: 0.78rem; flex-direction: column; align-items: flex-start; padding: 0.8rem 1rem; }
       .footer-inner { flex-direction: column; align-items: center; text-align: center; }
       .footer-text { text-align: center; }
 
-      .header-tip { font-size: 0.7rem; padding: 0.3rem 0.75rem; margin-top: 1.1rem; }
+      .header-tip { font-size: 0.78rem; padding: 0.35rem 0.9rem; margin-top: 1.1rem; }
     }
     @media (max-width: 360px) {
       header h1 { font-size: 1.4rem; }
-      .intensity-pill { font-size: 0.65rem; padding: 0.3rem 0.7rem; }
+      .intensity-pill { font-size: 0.72rem; padding: 0.35rem 0.75rem; }
     }
 
     /* ── SESSIONI ESEMPIO ── */
@@ -962,18 +976,18 @@
     }
     .sessions-header-info { flex: 1; min-width: 0; }
     .sessions-header-label {
-      font-size: 0.6rem;
-      letter-spacing: 0.14em;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--text-muted);
+      color: var(--text-soft);
       font-weight: 700;
     }
     .sessions-header-title {
-      font-size: 0.98rem;
-      font-weight: 800;
+      font-size: 1.05rem;
+      font-weight: 700;
       color: #fff;
       letter-spacing: 0.01em;
-      margin-top: 0.15rem;
+      margin-top: 0.2rem;
     }
     .sessions-header-chevron {
       margin-left: auto;
@@ -1004,14 +1018,14 @@
       padding: 1rem;
     }
     .sessions-hint {
-      font-size: 0.72rem;
-      color: var(--text-muted);
+      font-size: 0.82rem;
+      color: var(--text-soft);
       margin: -0.5rem 0 1.1rem;
-      padding: 0.5rem 0.85rem;
+      padding: 0.6rem 0.95rem;
       background: rgba(0,230,118,0.05);
       border: 1px dashed rgba(0,230,118,0.22);
       border-radius: 8px;
-      line-height: 1.5;
+      line-height: 1.6;
     }
     .sessions-grid {
       display: grid;
@@ -1030,23 +1044,24 @@
       background: var(--surface2);
     }
     .session-type {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
+      font-size: 0.72rem;
+      letter-spacing: 0.09em;
       text-transform: uppercase;
       color: var(--orange);
       font-weight: 700;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.35rem;
     }
     .session-name {
-      font-size: 1rem;
-      font-weight: 800;
+      font-size: 1.05rem;
+      font-weight: 700;
       color: var(--text);
-      line-height: 1.25;
+      line-height: 1.35;
     }
     .session-meta {
-      font-size: 0.72rem;
-      color: var(--text-muted);
-      margin-top: 0.35rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 0.4rem;
+      line-height: 1.5;
     }
     .session-body {
       padding: 1rem 1.25rem;
@@ -1100,31 +1115,32 @@
       border-color: var(--orange) !important;
     }
     .step-num {
-      font-size: 0.65rem;
+      font-size: 0.75rem;
       font-weight: 800;
       color: var(--orange);
-      min-width: 18px;
+      min-width: 22px;
       padding-top: 0.1rem;
       flex-shrink: 0;
     }
     .step-content { flex: 1; }
     .step-name {
-      font-size: 0.82rem;
+      font-size: 0.9rem;
       font-weight: 700;
       color: var(--text);
-      line-height: 1.3;
+      line-height: 1.4;
     }
     .step-detail {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      margin-top: 0.15rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 0.2rem;
+      line-height: 1.5;
     }
     .step-pill {
-      font-size: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.06em;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
-      padding: 0.1rem 0.45rem;
+      padding: 0.15rem 0.5rem;
       border-radius: 999px;
       border: 1px solid;
       flex-shrink: 0;
@@ -1135,13 +1151,13 @@
     .sp-high { color: var(--high); border-color: var(--high); background: var(--high-bg); }
     .session-note {
       margin-top: 0.5rem;
-      font-size: 0.72rem;
-      color: var(--text-muted);
+      font-size: 0.82rem;
+      color: var(--text-soft);
       background: rgba(0,230,118,0.06);
       border: 1px solid rgba(0,230,118,0.15);
       border-radius: 8px;
-      padding: 0.6rem 0.75rem;
-      line-height: 1.6;
+      padding: 0.7rem 0.85rem;
+      line-height: 1.65;
     }
     .session-note strong { color: var(--orange-light); }
     @media (max-width: 600px) {
@@ -1219,24 +1235,24 @@
     }
     .category-info { flex: 1; min-width: 0; }
     .category-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--orange);
-      font-weight: 800;
-      margin-bottom: 0.25rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
     }
     .category-name {
-      font-size: 1.45rem;
-      font-weight: 900;
+      font-size: 1.5rem;
+      font-weight: 800;
       color: var(--text);
-      line-height: 1.1;
+      line-height: 1.2;
     }
     .category-desc {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 0.35rem;
-      line-height: 1.4;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+      margin-top: 0.4rem;
+      line-height: 1.55;
     }
     .category-chevron {
       font-size: 1.2rem;
@@ -1281,9 +1297,9 @@
       letter-spacing: 0.02em;
     }
     .category-empty-desc {
-      font-size: 0.82rem;
-      color: var(--text-muted);
-      line-height: 1.55;
+      font-size: 0.92rem;
+      color: var(--text-soft);
+      line-height: 1.65;
       max-width: 480px;
       margin: 0 auto 1.3rem;
     }
@@ -1315,10 +1331,10 @@
     }
     .working-sub {
       margin-top: 0.9rem;
-      font-size: 0.74rem;
-      color: var(--text-muted);
+      font-size: 0.82rem;
+      color: var(--text-soft);
       font-style: italic;
-      line-height: 1.5;
+      line-height: 1.6;
       max-width: 420px;
       margin-left: auto;
       margin-right: auto;
@@ -1327,14 +1343,14 @@
       .category { margin: 1.6rem 0; border-radius: 14px; }
       .category-header { padding: 1rem 1.1rem; gap: 0.75rem; }
       .category-icon { font-size: 1.6rem; }
-      .category-name { font-size: 1.15rem; }
-      .category-desc { font-size: 0.72rem; }
+      .category-name { font-size: 1.2rem; }
+      .category-desc { font-size: 0.82rem; line-height: 1.55; }
       .category-body { padding: 0 0.9rem; }
       .category.open > .category-body { padding: 0.75rem 0.9rem 1.1rem; }
     }
     @media (max-width: 360px) {
-      .category-name { font-size: 1rem; }
-      .category-label { font-size: 0.58rem; letter-spacing: 0.12em; }
+      .category-name { font-size: 1.05rem; }
+      .category-label { font-size: 0.66rem; letter-spacing: 0.11em; }
     }
 
     /* ── LOGIN GATE (sporty edition) ── */
