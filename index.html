@@ -1516,13 +1516,13 @@
       color: #00e676;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      margin: 0 0 0.4rem;
+      margin: 0 0 0.05rem;
     }
     .login-title {
       font-size: 1.85rem;
       font-weight: 900;
       color: #fff;
-      margin: 0 0 0.4rem;
+      margin: 0 0 0.1rem;
       letter-spacing: 0.01em;
       line-height: 1.1;
       text-transform: uppercase;
@@ -1551,7 +1551,7 @@
       width: 40px;
       height: 3px;
       background: linear-gradient(90deg, transparent 0%, #00e676 50%, transparent 100%);
-      margin: 0.5rem auto 0.8rem;
+      margin: 0.1rem auto 0.3rem;
       border-radius: 2px;
     }
     .login-sub {
@@ -1672,6 +1672,26 @@
       .login-athlete { font-size: 1rem; }
       .login-badge { width: 64px; height: 64px; font-size: 2rem; }
     }
+
+    /* ── TRANSIZIONE LOGIN → HOMEPAGE ── */
+    .login-card.dissolve {
+      animation: login-card-dissolve 0.32s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+    @keyframes login-card-dissolve {
+      0%   { opacity: 1; filter: blur(0px); transform: scale(1); }
+      100% { opacity: 0; filter: blur(8px); transform: scale(0.9); }
+    }
+    .login-gate.fade-out {
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .login-card.dissolve {
+        animation: none !important;
+        transition: opacity 0.3s ease !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1698,6 +1718,7 @@
     <button type="button" class="login-bypass" onclick="unlockSite()" aria-label="bypass" title="bypass">◆</button>
   </div>
 </div>
+
 
 <div class="site-content">
 
@@ -2921,9 +2942,15 @@
 
   function unlockSite() {
     const gate = document.getElementById('loginGate');
-    gate.classList.add('hidden');
-    document.documentElement.classList.remove('login-locked');
-    setTimeout(() => gate.remove(), 500);
+    const card = document.getElementById('loginCard');
+
+    // Transizione semplice: la card si dissolve, poi la schermata sfuma
+    card.classList.add('dissolve');
+    setTimeout(() => {
+      document.documentElement.classList.remove('login-locked');
+      gate.classList.add('fade-out');
+    }, 260);
+    setTimeout(() => { gate.remove(); }, 650);
   }
 
   function rejectLogin(err) {
